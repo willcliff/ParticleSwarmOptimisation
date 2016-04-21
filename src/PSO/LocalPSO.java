@@ -9,6 +9,7 @@ public class LocalPSO extends PSO{
 		super();
 		System.out.println("Commencing Local PSO!\n");
 	}
+	//Need to create a best neighbour and add/remove neighbour
 	
 	@Override
 	public void calculateGBest(int i) {
