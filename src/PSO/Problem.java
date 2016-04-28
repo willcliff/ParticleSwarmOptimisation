@@ -56,6 +56,12 @@ public class Problem {
 			minPosition = -600;
 			maxPosition = 600; 
 			break;
+		case 8: //Ellipsoidal
+			System.out.println("Ellipsoidal");
+			dimensions = 10;
+			minPosition = -100;
+			maxPosition = 600; 
+			break;
 		}
 		System.out.println("Min Position: " + minPosition + "\tMax POsition: " + maxPosition + "\tDimensions: " + dimensions);
 	}
@@ -123,144 +129,105 @@ public class Problem {
 					prod *= Math.cos(xi / Math.sqrt(i));
 				}
 		        fitness = (sum / 4000.0) - prod + 1.0;		
-		        break;		
+		        break;	
+			case 8:
+				    fitness = 0.0;
+				    //sr_func(x,z,nx,Os,Mr,1.0,s_flag,r_flag);/*shift and rotate*/
+				        
+				    for (int i=0; i<dimensions; i++)
+				    {
+				        fitness += Math.pow(10.0,6.0*i/(dimensions-1))*position[i]*position[i];
+				    }
+				    	
+				//f[i]=ellips_func(t,f[i],nx,OShift,M,1,1);
+				//f[i]+=100.0;
+				break;
 		}
-		return fitness;		
-	}
-	/*public double ackley(double[] position){//Ackley	 		
-		double fitness = 0;		
-		double sum1 = 0.0;
-		double sum2 = 0.0;
-		for (int i = 0; i < dimensions; i++) {
-			sum1 += position[i] * position[i];
-			sum2 += Math.cos(2.0 * Math.PI * position[i]);
-		}	
-		fitness = -20 * Math.exp(-0.2 * Math.sqrt(sum1 / dimensions)) - Math.exp((sum2 / dimensions)) + 20 + Math.exp(1);
-		return fitness;		
-	}*/
-	
-	
-	/*public Problem(){//Ackley
-	 	System.out.println("Ackley Function: f(x) = -20*exp(-0.2*sqrt(1/n * ∑(xi^2)) - exp(1/n*∑(cos(2*pi*xi)) + 20 + exp(1)");
-		dimensions = 30;
-		minPosition = new double[dimensions];
-		maxPosition = new double[dimensions];
-		for (int i = 0; i < dimensions; i++) {
-			minPosition[i] = -32.768;
-			maxPosition[i] = 32.768;			
-		}
-	}
-	public double getFitness(double[] position) {
-		double fitness = 0;		
-		double sum1 = 0.0;
-		double sum2 = 0.0;
-		for (int i = 0; i < dimensions; i++) {
-			sum1 += position[i] * position[i];
-			sum2 += Math.cos(2.0 * Math.PI * position[i]);
-		}
-		//return (-a * Math.exp(-b * Math.sqrt(sum1 / dimensions))) - Math.exp(sum2 / dimensions) + a + Math.E;
+		return fitness;	
 		
-		fitness = -20 * Math.exp(-0.2 * Math.sqrt(sum1 / dimensions)) - Math.exp((sum2 / dimensions)) + 20 + Math.exp(1);
-		return fitness;		
-	}*/	
-	
-	
-	/*public Problem(){//Rosenbrock
-		System.out.println("Rosenbrock Function: f(x) = ∑ (100(xi+1 - xi^2)^2 + (xi - 1)^2)");
-		dimensions = 30;
-		minPosition = new double[dimensions];
-		maxPosition = new double[dimensions];
-		//minVelocity = new double[dimensions];
-		//maxVelocity = new double[dimensions];
-		for (int i = 0; i < dimensions; i++) {
-			minPosition[i] = -2.048;
-			maxPosition[i] = 2.048;
-			//minVelocity[i] = -1;
-			//maxVelocity[i] = 1;
-		}
-	}	
-	public double getFitness(double[] position) {
-		double fitness = 0.0;
-		for (int i = 0; i < dimensions - 1; i++) {
-			//double xi = position[(i - 1)];
-			//double yi = position[i];
-			//fitness = fitness + (100.0 * ((yi - (xi * xi)) * (yi - (xi * xi)))) + ((1.0 - xi) * (1.0 - xi));
-			
-			fitness += 100 * (position[i + 1] - position[i] * position[i]) * (position[i + 1] - position[i] * position[i]) + (position[i] - 1) * (position[i] - 1);
-		}
-		return fitness;
+		//z=position
+				/*double ellips_func (double[] x, double f, int nx, double[] Os,double[] Mr,int s_flag,int r_flag) 
+				{
+				    int i;
+				    f = 0.0;
+				    sr_func(x,z,nx,Os,Mr,1.0,s_flag,r_flag);
+				        
+				    for (i=0; i<nx; i++)
+				    {
+				        f += Math.pow(10.0,6.0*i/(nx-1))*z[i]*z[i];
+				    }
+				    return f;
+				}*/			
 	}
-	/*for (int i = 0; i < dimension - 1; i++)
-    {
-        Fitness += 100 * (Position[i + 1] - Position[i] * Position[i]) * (Position[i + 1] - Position[i] * Position[i]) + (Position[i] - 1) * (Position[i] - 1);
-    }*/
-	
-	/*public Problem(){//Sphere
-	 	System.out.println("Sphere Function: f(x) = ∑ (xi^2 -10cos(2*pi*xi) + 10)");
-		dimensions = 30;
-		minPosition = new double[dimensions];
-		maxPosition = new double[dimensions];
 
-		for (int i = 0; i < dimensions; i++) {
-			minPosition[i] = -5.12; // -100
-			maxPosition[i] = 5.12;	// 100
+	/*void shiftfunc (double[] x, double[] xshift, int nx,double[] Os)
+	{
+		int i;
+	    for (i=0; i<nx; i++)
+	    {
+	        xshift[i]=x[i]-Os[i];
+	    }
+	}
+	
+	
+	void rotatefunc (double[] x, double[] xrot, int nx,double[] Mr)
+	{
+		int i,j;
+	    for (i=0; i<nx; i++)
+	    {
+	        xrot[i]=0;
+				for (j=0; j<nx; j++)
+				{
+					xrot[i]=xrot[i]+x[j]*Mr[i*nx+j];
+				}
+	    }
+	}
+	//sh_rate = 1
+	void sr_func (double[] x, double[] sr_x, int nx, double[] Os, double[] Mr, double sh_rate, int s_flag, int r_flag)
+	{
+		int i,j;
+		if (s_flag==1)
+		{
+			if (r_flag==1)
+			{	
+				shiftfunc(x, y, nx, Os);
+				for (i=0; i<nx; i++)//shrink to the orginal search range
+				{
+					y[i]=y[i]*sh_rate;
+				}
+				rotatefunc(y, sr_x, nx, Mr);
+			}
+			else
+			{
+				shiftfunc(x, sr_x, nx, Os);
+				for (i=0; i<nx; i++)//shrink to the orginal search range
+				{
+					sr_x[i]=sr_x[i]*sh_rate;
+				}
+			}
 		}
-	}	
-	public double getFitness(double[] position) {
-		double fitness = 0.0;
-		for (int i = 0; i < dimensions; i++) {
+		else
+		{	
+
+			if (r_flag==1)
+			{	
+				for (i=0; i<nx; i++)//shrink to the orginal search range
+				{
+					y[i]=x[i]*sh_rate;
+				}
+				rotatefunc(y, sr_x, nx, Mr);
+			}
+			else
 			
-			fitness += position[i] * position[i] - 10 * Math.cos(2 * Math.PI * position[i]) + 10;
+			{
+				for (j=0; j<nx; j++)//shrink to the orginal search range
+				{
+					sr_x[j]=x[j]*sh_rate;
+				}
+			}
 		}		
-		return fitness;				
 	}*/
-	
-	 /*public Problem() //Griewank
-     {		 
-		 System.out.println("Griewank Function: f(x) = 1 + (1/4000) * ∑(xi^2) - N(cos(xi/pi))");
-		 dimensions = 30;
-		 minPosition = new double[dimensions];
-		 maxPosition = new double[dimensions];
-         
-         for (int i = 0; i < dimensions; i++) {
- 			minPosition[i] = -600;
- 			maxPosition[i] = 600;			
- 		}      
-     }	 
-	 public double getFitness(double[] position) {
-			double fitness = 0.0;
-			double sum = 0;
-	        double prod = 1;
-			for (int i = 0; i < dimensions; i++)
-	         {
-	             sum += position[i] * position[i];
-	             prod = prod * Math.cos(position[i] / Math.PI);
-	         }
-	         fitness = 1 + (1 / 4000) * sum - prod;						
-	         return fitness;	
-     }*/
-	
-	/*public Problem() //Rastrigin
-     {		 
-		 System.out.println("Rastrigin Function: f(x) = ∑ (xi^2 - 10cos(2*pi*xi) + 10)");
-		 dimensions = 30;
-		 minPosition = new double[dimensions];
-		 maxPosition = new double[dimensions];
-         
-         for (int i = 0; i < dimensions; i++) {
- 			minPosition[i] = -600;
- 			maxPosition[i] = 600;			
- 		}        
-     }	 
-	 public double getFitness(double[] position) {
-			double fitness = 0.0;
-			fitness = 0; 
-            for (int i = 0; i < dimensions; i++)
-            {
-                fitness += position[i] * position[i] - 10 * Math.cos(2 * Math.PI * position[i]) + 10;
-            }					
-	         return fitness;							
-     }*/		
+		
 	public int getDimensions() {
 		return dimensions;
 	}

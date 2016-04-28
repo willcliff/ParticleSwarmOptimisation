@@ -17,19 +17,19 @@ public class PSOMain {
 		
 	}
 	public static void begin() {
-		int numberOfRuns = 25;
+		int numberOfRuns = 1;
 		double[] averageValues = new double[numberOfRuns];
 		double total = 0;
 		double finalAverage;
 		for(int i = 0; i<numberOfRuns; i++){
 			
-		GlobalPSO pso = new GlobalPSO();
-		pso.execute();
+		//GlobalPSO pso = new GlobalPSO();
+		//pso.execute();
 		//PSO pso = new PSO();
 		//pso.execute();
 
-		//LocalPSO pso = new LocalPSO();
-		//pso.execute();
+		LocalPSO pso = new LocalPSO();
+		pso.execute();
 		
 		
 		

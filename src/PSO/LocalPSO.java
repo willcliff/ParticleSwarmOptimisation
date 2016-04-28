@@ -12,7 +12,7 @@ public class LocalPSO extends PSO{
 	//Need to create a best neighbour and add/remove neighbour
 	
 	@Override
-	public void calculateGBest(int i) {
+	protected Particle calculateNeighbourhoodBest(int i) {
 			//System.out.println("Gbest particle from local typology!");
 			int indexBestParticle = i;
 			int indexLeftNeighbour = (i > 0) ? i - 1 : swarmSize - 1;
@@ -30,8 +30,8 @@ public class LocalPSO extends PSO{
 				indexBestParticle = indexRightNeighbour;
 				gBestFitness = rightNeighborParticlePBestFitness;
 			}
-			gBestParticle = swarm.get(indexBestParticle);
-			gBest = gBestParticle.getPBest().clone();
+			return swarm.get(indexBestParticle);
+			
 	}	
 	
 }

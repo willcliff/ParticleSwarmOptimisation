@@ -13,18 +13,11 @@ public class GlobalPSO extends PSO{
 	public Particle bestNeighbour(int i) {
 		return gBestParticle;		
 	}*/
-	
-	public void calculateGBest(int i) {
+	@Override
+	protected Particle calculateNeighbourhoodBest(int i) {
 		//Particle particle = Collections.min(swarm);
 		//System.out.println("Gbest particle from global typology!");
-		for(Particle particle : swarm){
-			if (particle.getFitness() < gBestFitness) {
-				gBestParticle = particle;
-				gBest = particle.getPosition().clone();
-				gBestFitness = particle.getFitness();				
-			}
-			
-		}
+		return gBestParticle;
 		
 	}
 }

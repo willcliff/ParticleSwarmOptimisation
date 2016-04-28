@@ -14,7 +14,7 @@ public class TestMain {
 		File fpt;
 		//x = position, f = fitness
 		//tf.test_func(x, f, dimension,population_size,func_num);
-		m=3; //population size
+		m=3; 
 		n=10; //dimension
 		
 		x = new double[m*n];

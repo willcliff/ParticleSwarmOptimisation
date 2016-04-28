@@ -65,7 +65,7 @@ public class TestFunc {
 	//double cf_cal(double[] , double , int , double[] ,double[] ,double[] ,double[] , int )
 	
 	//tf.test_func(x, f, dimension,population_size,func_num);
-	void test_func(double[] x, double[] f, int nx, int mx,int func_num)throws Exception{
+	public void test_func(double[] x, double[] f, int nx, int mx,int func_num)throws Exception{
 		int cf_num=10,i,j;
 		if (ini_flag==1) 
 		{
@@ -243,7 +243,7 @@ public class TestFunc {
 		for (i = 0; i < mx; i++)
 		{
 			for ( j=0; j<nx; j++){
-				t[j] = x[i*nx+j];
+				t[j] = x[i*nx+j]; //particle position every m*n indexes t = position
 			}
 			
 			switch(func_num)

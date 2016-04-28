@@ -17,7 +17,7 @@ import java.text.*;
 
 public abstract class PSO {
 	Problem problem;
-	int function = 2;
+	int function = 1;
 	int iterations = 10000;
 	int swarmSize = 50;
 	int iteration;
@@ -83,7 +83,7 @@ public abstract class PSO {
 			// and fitness
 			
 			
-
+			
 			// calculate and update pBest and gBest
 			// step1 update pBest
 
@@ -94,7 +94,7 @@ public abstract class PSO {
 			
 			// for LPSO returns same for GPSO
 			//gBestParticle = bestNeighbour(i);
-			calculateGBest(i);
+			calculateGBest();
 			//gBestFitness = gBestParticle.getPBestFitness();
 			
 			
@@ -110,7 +110,8 @@ public abstract class PSO {
 			
 			// update the velocity and positions
 			// step 3 update the velocity and position
-			particle.update(gBest);
+			Particle bestParticleNeighbourhood = calculateNeighbourhoodBest(i);
+			particle.update(bestParticleNeighbourhood.getPBest());
 
 			// step 4 update the position
 			// particle.updatePosition();
@@ -121,10 +122,10 @@ public abstract class PSO {
 			
 		}
 		fitnesses[j] = gBestFitness;
-		/*System.out.println("ITERATION " + iteration + ": ");
-		System.out.println("     SwarmFitnesses: " + Arrays.toString(swarmFitnesses));
-		System.out.println("     Partcile: " + gBestParticle.particleNo + "\tGBestFitnessA: " + gBestParticle.getFitness());
-		System.out.println("     GBestFitnessB: " + gBestFitness);*/
+		//System.out.println("ITERATION " + iteration + ": ");
+		//System.out.println("     SwarmFitnesses: " + Arrays.toString(swarmFitnesses));
+		//System.out.println("     Partcile: " + gBestParticle.particleNo + "\tGBestFitnessA: " + gBestParticle.getFitness());
+		//System.out.println("     GBestFitnessB: " + gBestFitness);
 		
 		/*
 		 * for(int i = 0; i < dimensions; i++) { System.out.println("ITERATION "
@@ -141,9 +142,19 @@ public abstract class PSO {
 
 		}	// iteration++;
 	}
+	abstract Particle calculateNeighbourhoodBest(int i);
 
 	// method to calculate the gBest particle
-	public abstract void calculateGBest(int i);
+	public void calculateGBest(){
+		for(Particle particle : swarm){
+			if (particle.getFitness() < gBestFitness) {
+				gBestParticle = particle;
+				gBest = particle.getPosition().clone();
+				gBestFitness = particle.getFitness();				
+			}
+			
+		}
+	}
 
 	//public abstract Particle bestNeighbour(int i);
 
@@ -156,6 +167,7 @@ public abstract class PSO {
 		
 			initialise();
 			iterate();
+			calculateGBest();
 			System.out.println("     Fitness: " + (gBestParticle.getFitness()));
 			System.out.println("     gBestFitness: " + gBestFitness);
 			System.out.println("\n");
