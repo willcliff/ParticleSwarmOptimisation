@@ -1,5 +1,6 @@
 package PSO;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -21,6 +22,11 @@ public class Particle implements Comparable<Particle> {
 	double X = 2 / Math.abs(2 - w - Math.sqrt(w * w - 4 * w)); // double X = .72984;
 	private static int particleCount = 1;
 	public int particleNo;
+	private ArrayList<Particle> neighbourhood  = new ArrayList<Particle>();
+	ArrayList<Particle> notNeighbours;
+	private double[] nBest;
+	private double nBestFitness;
+	public double neighbourhoodNumber;
 	
 	
 
@@ -170,5 +176,13 @@ public class Particle implements Comparable<Particle> {
 	}
 	public double[] getPosition() {
 		return position;
-	}	
+	}
+	
+	public void addNeighbour(Particle neighbour){
+		neighbourhood.add(neighbour);
+		neighbourhood.remove(neighbour);
+	}
+	public void setNotNeighbours(ArrayList<Particle> swarm){
+		notNeighbours = swarm;
+	}
 }
