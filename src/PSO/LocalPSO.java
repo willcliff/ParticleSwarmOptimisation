@@ -5,8 +5,8 @@ import java.util.Collections;
 public class LocalPSO extends PSO{
 	//double gBestFitness;
 	
-	public LocalPSO(){
-		super();
+	public LocalPSO(Problem problem){
+		super(problem);
 		System.out.println("Commencing Local PSO!\n");
 	}
 	//Need to create a best neighbour and add/remove neighbour

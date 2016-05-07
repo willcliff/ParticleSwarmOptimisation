@@ -17,7 +17,7 @@ import java.text.*;
 
 public abstract class PSO {
 	Problem problem;
-	int function = 1;
+	//int function = 1;
 	int iterations = 10000;
 	int swarmSize = 50;
 	int iteration;
@@ -39,8 +39,8 @@ public abstract class PSO {
 	double standardDeviation;
 	Particle gBestParticle; // globally best particle
 
-	public PSO() {
-		Problem problem = new Problem(function);
+	public PSO(Problem problem) {
+		
 		this.problem = problem;		
 	}
 
