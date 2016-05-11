@@ -14,6 +14,7 @@ public class TestFunc14 extends Problem{
 	final double E  = 2.7182818284590452353602874713526625;
 	final double PI = 3.1415926535897932384626433832795029;
 	
+	
 	double[] OShift,M,y,z,x_bound; //z = sr_x; shifted and rotated position
 	int ini_flag,n_flag,func_flag;
 	int[] SS;	
@@ -27,6 +28,7 @@ public class TestFunc14 extends Problem{
 		switch(function){
 		
 		case 1: //Ellipsoidal
+			functionName = "Ellipsoidal Function";
 			System.out.println("Ellipsoidal Function");			
 			break;
 		case 2:

@@ -16,42 +16,49 @@ public class BasicTestFunc extends Problem{
 		switch(functionNumber){
 		
 		case 1: //Sphere
+			functionName = "Sphere Function";
 			System.out.println("BasicTestFunc Sphere Function: f(x) = ∑ (xi^2 -10cos(2*pi*xi) + 10)");
 			dimensions = 30;
 			minPosition = -5.12;
 			maxPosition = 5.12;
 			break;
 		case 2: //Rosenbrock
+			functionName = "Rosenbrock Function";
 			System.out.println("Rosenbrock Function: f(x) = ∑ (100(xi+1 - xi^2)^2 + (xi - 1)^2)");
 			dimensions = 30;
 			minPosition = -2.048;
 			maxPosition = 2.048;			
 			break;
 		case 3: //Ackley
+			functionName = "Ackley Function";
 			System.out.println("Ackley Function: f(x) = -20*exp(-0.2*sqrt(1/n * ∑(xi^2)) - exp(1/n*∑(cos(2*pi*xi)) + 20 + exp(1)");
 			dimensions = 30;
 			minPosition = -32.768;
 			maxPosition = 32.768;			
 			break;
 		case 4: //Griewank
+			functionName = "Griewank Function";
 			System.out.println("Griewank Function: f(x) = 1 + (1/4000) * ∑(xi^2) - N(cos(xi/pi))");
 			dimensions = 30;
 			minPosition = -600;
 			maxPosition = 600; 
 			break;
 		case 5: //Rastrigin
+			functionName = "Rastrigin Function";
 			System.out.println("Rastrigin Function: f(x) = ∑ (xi^2 - 10cos(2*pi*xi) + 10)");
 			dimensions = 30;	
 	 		minPosition = -5.12;
 	 		maxPosition = 5.12;	 
 			break;
 		case 6: //Schaffer2D
+			functionName = "Schaffer2D Function";
 			System.out.println("Shaeffer2D Function: f(x) = 0.5 - ((sin(sqrt(x1^2+x2^2)))^2 - 0.5))/(1 + 0.001(x1^2+x2^2))^2");
 			dimensions = 2;	
 	 		minPosition = -100;
 	 		maxPosition = 100;		
 	 		break;
 		case 7: //Griewank10D
+			functionName = "Griewank10D Function";
 			System.out.println("Griewank10D Function: f(x) = 1 + (1/4000) * ∑(xi^2) - N(cos(xi/pi))");
 			dimensions = 10;
 			minPosition = -600;

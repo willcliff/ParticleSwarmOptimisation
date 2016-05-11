@@ -27,11 +27,7 @@ public class Particle implements Comparable<Particle> {
 	private double[] nBest;
 	private double nBestFitness;
 	public double neighbourhoodNumber;
-	
-	
-
 	int dimensions; //dimensions of problem
-
 	Problem problem;
 
 	public Particle(Problem problem) {

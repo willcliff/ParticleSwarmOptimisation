@@ -4,8 +4,9 @@ import java.util.Collections;
 
 public class GlobalPSO extends PSO{
 	
-	public GlobalPSO(Problem problem){		
-		super(problem);
+	public GlobalPSO(Problem problem, int numberOfRuns){		
+		super(problem, numberOfRuns);
+		psoType = "GlobalSPSO";
 		System.out.println("Commencing Global PSO!\n");
 	}
 		

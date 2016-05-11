@@ -5,8 +5,10 @@ import java.util.Collections;
 public class LocalPSO extends PSO{
 	//double gBestFitness;
 	
-	public LocalPSO(Problem problem){
-		super(problem);
+	
+	public LocalPSO(Problem problem, int numberOfRuns){
+		super(problem, numberOfRuns);
+		psoType = "RingSPSO";
 		System.out.println("Commencing Local PSO!\n");
 	}
 	//Need to create a best neighbour and add/remove neighbour

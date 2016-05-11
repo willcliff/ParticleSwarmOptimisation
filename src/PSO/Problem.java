@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public abstract class Problem {
+	public String functionName;
 	protected int dimensions;
 	protected double minPosition;
 	protected double maxPosition;

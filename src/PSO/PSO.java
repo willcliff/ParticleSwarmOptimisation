@@ -21,9 +21,10 @@ public abstract class PSO {
 	int iterations = 10000;
 	int swarmSize = 50;
 	int iteration;
-	int numberOfRuns;
-	double[] fitnesses = new double[iterations];
-	double[] swarmFitnesses = new double[swarmSize];// stores gBestFitness after each iteration
+	int numberOfRuns = 5;
+	double[] averageFitnesses = new double[iterations];
+	double[] avergaeBestFitness = new double[numberOfRuns];
+	// stores gBestFitness after each iteration
 	Date dateTime = new Date();
 	SimpleDateFormat ft = new SimpleDateFormat ("E yyyy-MM-dd'at'hhmmss a zzz");
 	String date = new String(ft.format(dateTime));
@@ -34,13 +35,13 @@ public abstract class PSO {
 	ArrayList<Particle> swarm = new ArrayList<Particle>();
 	double gBestFitness; // globally best fitness
 	double[] gBest; // globally(swarms) best position
-	String psoType;	 // int dimensions = problem.getDimensions();
+	protected String psoType = "Standard";	 // int dimensions = problem.getDimensions();
 	
 	double standardDeviation;
 	Particle gBestParticle; // globally best particle
 
-	public PSO(Problem problem) {
-		
+	public PSO(Problem problem, int numberOfRuns) {
+		this.numberOfRuns = numberOfRuns;
 		this.problem = problem;		
 	}
 
@@ -70,58 +71,56 @@ public abstract class PSO {
 	}
 
 	public void iterate() {
+		double[] swarmFitnesses = new double[swarmSize];
 		for (int j = 0; j < iterations; j++) {
-			iteration = j;															
+			//iteration = j;															
 		
 		
 		// calculate the pBest and gBest positions
-		for (int i = 0; i < swarmSize; i++) {
-			Particle particle = swarm.get(i);
-			
-			// pass the swarm to calculate the gBest
-			// particle
-			// and fitness
-			
-			
-			
-			// calculate and update pBest and gBest
-			// step1 update pBest
+			for (int i = 0; i < swarmSize; i++) {
+				Particle particle = swarm.get(i);
 
-			particle.updatePBest();
+				// pass the swarm to calculate the gBest
+				// particle
+				// and fitness
 
-			// step2 update gBest
-			// check the method to update the fitness values!!!!*****
-			
-			// for LPSO returns same for GPSO
-			//gBestParticle = bestNeighbour(i);
-			calculateGBest();
-			//gBestFitness = gBestParticle.getPBestFitness();
-			
-			
-			// update intertia weight
-			/*
-			 * w = W_UPPERBOUND - (((double) iteration) / maxIterations) *
-			 * (W_UPPERBOUND - W_LOWERBOUND);
-			 * 
-			 * inertialWeight = (inertialWeight - FINAL_WEIGHT) *
-			 * ((maxIterations - iteration) / (double) maxIterations) +
-			 * FINAL_WEIGHT;
-			 */
-			
-			// update the velocity and positions
-			// step 3 update the velocity and position
-			Particle bestParticleNeighbourhood = calculateNeighbourhoodBest(i);
-			particle.update(bestParticleNeighbourhood.getPBest());
+				// calculate and update pBest and gBest
+				// step1 update pBest
 
-			// step 4 update the position
-			// particle.updatePosition();
-			
-			// update fitness
-			// fitness = problem.getFitness(position);
-			swarmFitnesses[i] = particle.getFitness();
-			
-		}
-		fitnesses[j] = gBestFitness;
+				particle.updatePBest();
+
+				// step2 update gBest
+				// check the method to update the fitness values!!!!*****
+
+				// for LPSO returns same for GPSO
+				// gBestParticle = bestNeighbour(i);
+				calculateGBest();
+				// gBestFitness = gBestParticle.getPBestFitness();
+
+				// update intertia weight
+				/*
+				 * w = W_UPPERBOUND - (((double) iteration) / maxIterations) *
+				 * (W_UPPERBOUND - W_LOWERBOUND);
+				 * 
+				 * inertialWeight = (inertialWeight - FINAL_WEIGHT) *
+				 * ((maxIterations - iteration) / (double) maxIterations) +
+				 * FINAL_WEIGHT;
+				 */
+
+				// update the velocity and positions
+				// step 3 update the velocity and position
+				Particle bestParticleNeighbourhood = calculateNeighbourhoodBest(i);
+				particle.update(bestParticleNeighbourhood.getPBest());
+
+				// step 4 update the position
+				// particle.updatePosition();
+
+				// update fitness
+				// fitness = problem.getFitness(position);
+				swarmFitnesses[i] = particle.getFitness();
+
+			}
+		averageFitnesses[j] += gBestFitness;
 		//System.out.println("ITERATION " + iteration + ": ");
 		//System.out.println("     SwarmFitnesses: " + Arrays.toString(swarmFitnesses));
 		//System.out.println("     Partcile: " + gBestParticle.particleNo + "\tGBestFitnessA: " + gBestParticle.getFitness());
@@ -140,7 +139,13 @@ public abstract class PSO {
 		// problem.getFitness(gBestParticle.position));
 		// ystem.out.println("     Value: " + gBestParticle.getFitness());
 
-		}	// iteration++;
+		}
+		/*try {
+			createAvSummary(averageFitnesses, date, numberOfRuns);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}// iteration++;*/
 	}
 	abstract Particle calculateNeighbourhoodBest(int i);
 
@@ -162,15 +167,37 @@ public abstract class PSO {
 		//double[] averageValues = new double[numberOfRuns];
 		
 		
-		//double total = 0;
-		//double finalAverage;
-		
+		double total = 0;
+		double finalAverage;
+		for (int i = 0; i < numberOfRuns; i++){
+			
+			System.out.println("     Pre Initialisation gBestFitness: " + gBestFitness);
 			initialise();
 			iterate();
 			calculateGBest();
 			System.out.println("     Fitness: " + (gBestParticle.getFitness()));
 			System.out.println("     gBestFitness: " + gBestFitness);
 			System.out.println("\n");
+			
+			
+			
+			avergaeBestFitness[i] = gBestFitness;
+			total += avergaeBestFitness[i];
+		
+			gBestFitness = 0; //reset the gBest Fitness
+		}
+		System.out.println("     Average BestValues: "
+				+ Arrays.toString(avergaeBestFitness));
+		
+			finalAverage = total / numberOfRuns;
+			System.out.println("     Final Average: " + finalAverage);
+			System.out.println("\n");
+		try {
+			createAvSummary(averageFitnesses, date, numberOfRuns);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 			/*for (int i = 0; i < iterations; i++) {
 				iteration = i;
 				System.out.println("\nSolution found at iteration " + (i)
@@ -199,60 +226,76 @@ public abstract class PSO {
 		//finalAverage = total/numberOfRuns;
 		//System.out.println("     Final Average: " + finalAverage);
 		//System.out.println("\n");
-		/*try {
-			createAvSummary(averageValues, date);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+		
+		
 		
 	}
 	
-	/*public static void createAvSummary(double values[], String date) throws IOException{
+	public void createAvSummary(double averageFitnesses[], String date, int noRuns) throws IOException{
 		String dir = "C:/Users/William/Documents/NUIG Masters/Year2/PSOResults";
-		String fileName = dir + "\\gBest " + date + ".dat";
+		String fileName = dir + "//" + psoType + problem.functionName + ".dat";
 		BufferedWriter output;
 		output = new BufferedWriter(new FileWriter(fileName));
-		for (int i = 0; i < values.length; i++)
+		for (int i = 0; i < averageFitnesses.length; i++)
         {
-            //values[i] = values[i] / noRuns+1;           
-            output.write(i+1 + "\t" + values[i]);         
+            averageFitnesses[i] = averageFitnesses[i] / noRuns;           
+            output.write(i+1 + "\t" + averageFitnesses[i] + "\n");         
         }
 		output.close();
-        gnuPlot(fileName, date);
+		System.out.println("\nFile Created!\n");
+        //gnuPlot(fileName, date);
 		
 		
 		
 	}
 	
-	public static void gnuPlot(String datFile, String date) throws IOException
+	public void gnuPlot(String datFile, String date) throws IOException
     {
-		/*try{			
-        String pngFile = "gBest "+ date + ".png";
+		//try{			
+			
+			//String pngFile = psoType + " " + date + ".png";
+	        //string pgm = @"C:\Program Files (x86)\gnuplot\bin\gnuplot.exe";
+	        //String pgm = "C:/Program Files (x86)/gnuplot/bin/wgnuplot.exe";
+	        //Runtime runTime = Runtime.getRuntime();
+	        //Process extPro = runTime.exec(pgm);
+	        //System.out.println("Opening gnuplot");
+        //String pngFile = psoType + " " + date + ".png";
         //string pgm = @"C:\Program Files (x86)\gnuplot\bin\gnuplot.exe";
-        String pgm = "C:/Program Files (x86)/gnuplot/bin/gnuplot.exe";
-        Process extPro = Runtime.getRuntime().exec(pgm);
+      
+        /*System.out.println("Opening gnuplot");
+        OutputStream outPut;
+        String gnuplot_cmd = "plot sin(x)" ;
+
+		PrintWriter pw = new PrintWriter(extPro.getOutputStream());
+		pw.print(gnuplot_cmd);
+		pw.close();
+        
+        outPut = extPro.getOutputStream();
+		PrintWriter gp=new PrintWriter(new BufferedWriter(new
+		OutputStreamWriter(outPut)));
+		gp.println("plot sin(x)\n");
+		gp.close();*/
       	
       	
-      	 //OutputStream outPut = new OutputStream();
+      	//OutputStream outPut = new OutputStream();
         //BufferedWriter gnupWri = new BufferedWriter(new PrintWriter);
         
-        InputStream stdin = extPro.getErrorStream();
+        /*InputStream stdin = extPro.getErrorStream();
         InputStreamReader isr = new InputStreamReader(stdin);
         BufferedReader br = new BufferedReader(isr);
         String line = null;
         while ((line = br.readLine()) != null)
             System.err.println("gnuplot:"+line);
         int exitVal = extPro.waitFor();
-        if (exitVal != 0)
+        if (exitVal != 0)*/
             //log("gnuplot Process exitValue: " + exitVal);
-        extPro.getInputStream().close();
+       /*extPro.getInputStream().close();
         extPro.getOutputStream().close();
         extPro.getErrorStream().close();
     } catch (Exception e) {
         System.err.println("Fail: " + e);
     }*/
-		/*String pngFile = "gBest "+ date + ".png";
+		String pngFile = "gBest "+ date + ".png";
         //string pgm = @"C:\Program Files (x86)\gnuplot\bin\gnuplot.exe";
         String pgm = "C:/Program Files (x86)/gnuplot/bin/wgnuplot.exe";
         Runtime runTime = Runtime.getRuntime();
@@ -277,7 +320,7 @@ public abstract class PSO {
         //InputStream inputStream = extPro.getInputStream();
 		//InputStreamReader isr = new InputStreamReader(inputStream);
               
-        out.println("reset");  
+        out.write("reset");  
         out.flush();        
         out.println("set autoscale");
         out.flush();   
@@ -305,6 +348,7 @@ public abstract class PSO {
         gnupStWr.Flush();
         gnupStWr.WriteLine("set ylabel \"Fitness\"");
         gnupStWr.Flush();
-        gnupStWr.WriteLine("plot '"+datFile+"' with lines");
-    }*/
+        gnupStWr.WriteLine("plot '"+datFile+"' with lines");*/
+    }
+		
 }

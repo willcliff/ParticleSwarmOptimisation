@@ -17,15 +17,17 @@ public class PSOMain {
 		
 	}
 	public static void begin() throws Exception {
-		int numberOfRuns = 1;
-		int function = 30;
+		int numberOfRuns = 5;
+		int function = 3;
 		
 		
 		for(int j = 1; j<=1; j++){
-			double[] averageValues = new double[numberOfRuns];
+			double[] avergaeBestFitness = new double[numberOfRuns];
+			
 			double total = 0;
 			double finalAverage;
-			for (int i = 0; i < numberOfRuns; i++) {
+			double[] averageFitnesses = new double[10];
+			//for (int r = 0; r < numberOfRuns; r++) {
 
 				// GlobalPSO pso = new GlobalPSO();
 				// pso.execute();
@@ -34,18 +36,26 @@ public class PSOMain {
 				// Problem problem = new Problem(function);
 
 				//BasicTestFunc problem = new BasicTestFunc(j);
-				TestFunc14 problem = new TestFunc14(function);
-				LocalPSO pso = new LocalPSO(problem);
+				BasicTestFunc problem = new BasicTestFunc(function);
+				//TestFunc14 problem = new TestFunc14(function);
+				LocalPSO pso = new LocalPSO(problem, numberOfRuns);
+				//GlobalPSO pso = new GlobalPSO(problem, numberOfRuns);
+				
 				pso.execute();
+				
+				
+							
 
-				averageValues[i] = pso.gBestFitness;
-				total += averageValues[i];
-			}
-			System.out.println("     Average Values: "
-					+ Arrays.toString(averageValues));
+				//avergaeBestFitness[r] = pso.gBestFitness;
+				//total += avergaeBestFitness[r];
+			//}			
+			
+			/*System.out.println("     Average BestValues: "
+					+ Arrays.toString(avergaeBestFitness));
+			
 			finalAverage = total / numberOfRuns;
 			System.out.println("     Final Average: " + finalAverage);
-			System.out.println("\n");
+			System.out.println("\n");*/
 
 		}
 	}

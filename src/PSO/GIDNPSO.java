@@ -10,8 +10,9 @@ public class GIDNPSO extends PSO {
      int y = 2;//rate of population increase
 	
 	
-	public GIDNPSO(){
-		super();
+	public GIDNPSO(Problem problem, int numberOfRuns){
+		super(problem, numberOfRuns);
+		psoType = "GIDNPSO";
 		for(Particle particle : swarm){
 			particle.neighbourhoodNumber = 0;			
 		}	
