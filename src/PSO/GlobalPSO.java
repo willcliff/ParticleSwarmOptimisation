@@ -4,8 +4,9 @@ import java.util.Collections;
 
 public class GlobalPSO extends PSO{
 	
-	public GlobalPSO(Problem problem, int numberOfRuns){		
-		super(problem, numberOfRuns);
+	public GlobalPSO(Problem problem){
+		super(problem);
+		System.out.println(problem.getDimensions());
 		psoType = "GlobalSPSO";
 		System.out.println("Commencing Global PSO!\n");
 	}
@@ -15,10 +16,16 @@ public class GlobalPSO extends PSO{
 		return gBestParticle;		
 	}*/
 	@Override
-	protected Particle calculateNeighbourhoodBest(int i) {
+	protected double[] calculateNeighbourhoodBest(int i) {
 		//Particle particle = Collections.min(swarm);
 		//System.out.println("Gbest particle from global typology!");
-		return gBestParticle;
+		return gBest;
+		
+	}
+
+	@Override
+	void createNeighbourhood() {
+		// TODO Auto-generated method stub
 		
 	}
 }

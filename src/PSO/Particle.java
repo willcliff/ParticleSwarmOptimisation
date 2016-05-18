@@ -10,6 +10,7 @@ public class Particle implements Comparable<Particle> {
 	private double[] velocity; //particles velocity
 	private double pBestFitness; //particles best fitness
 	private double[] pBest; //particles best position
+	private double[] nBest;
 	private double maxPos;
 	private double minPos;
 	int functionNumber;
@@ -20,26 +21,25 @@ public class Particle implements Comparable<Particle> {
 	double c2 = 2.05;
 	double w = c1 + c2;
 	double X = 2 / Math.abs(2 - w - Math.sqrt(w * w - 4 * w)); // double X = .72984;
-	private static int particleCount = 1;
+	//private static int particleCount = 1;
 	public int particleNo;
-	private ArrayList<Particle> neighbourhood  = new ArrayList<Particle>();
-	ArrayList<Particle> notNeighbours;
-	private double[] nBest;
-	private double nBestFitness;
+	protected ArrayList<Particle> neighbourhood  = new ArrayList<Particle>();
+	protected ArrayList<Particle> notNeighbours ;
 	public double neighbourhoodNumber;
 	int dimensions; //dimensions of problem
 	Problem problem;
 
 	public Particle(Problem problem) {
 		//particleCount  = 1;
-		particleNo = particleCount;
-		particleCount++;
+		//particleNo = particleCount;
+		//particleCount++;
 		//System.out.println("Particle Number: " + particleNo);
 		this.problem = problem;
 		dimensions = problem.getDimensions();
 		position = new double[dimensions];
 		velocity = new double[dimensions];
 		pBest = new double[dimensions];
+		setnBest(new double[dimensions]);
 		maxPos = problem.getMaxPosition();
 		minPos = problem.getMinPosition();			
 		for (int i = 0; i < dimensions; i++) {
@@ -78,12 +78,13 @@ public class Particle implements Comparable<Particle> {
 		//set pBest = to initial position
 		fitness = problem.getFitness(position);
 		pBest = position.clone();
+		nBest = position.clone();
 		pBestFitness = fitness;
 		//System.out.println("particle" + particleNo + "fitness: " + fitness);		
 	}
 
 	// finish updating velocity and update position
-	public void update(double[] gBest) {
+	public void update(double[] lBest) {
 		Random rand1 = new Random();
 		Random rand2 = new Random();
 		//System.out.println("Particle Number: " + particleNo + "Velocity Before: " + Arrays.toString(velocity));
@@ -96,7 +97,7 @@ public class Particle implements Comparable<Particle> {
 					//local best component
 					+ (c1 * rand1.nextDouble() * (pBest[i] - position[i]))
 					//global best component
-					+ (c2 * rand2.nextDouble() * (gBest[i] - position[i]))));
+					+ (c2 * rand2.nextDouble() * (lBest[i] - position[i]))));
 			//newVelocity = X *( velocity[i] + c1 * rand1 * (pBest[i] - position[i]) + c2 * rand2 * (gBest[i] - position[i]));
 			if (newVelocity < minVelocity) 
 				velocity[i] = minVelocity;			
@@ -176,9 +177,19 @@ public class Particle implements Comparable<Particle> {
 	
 	public void addNeighbour(Particle neighbour){
 		neighbourhood.add(neighbour);
-		neighbourhood.remove(neighbour);
+	}
+	public void removeNotNeighbours(Particle neighbour){
+		notNeighbours.remove(neighbour);
 	}
 	public void setNotNeighbours(ArrayList<Particle> swarm){
 		notNeighbours = swarm;
+	}
+
+	public double[] getnBest() {
+		return nBest;
+	}
+
+	public void setnBest(double[] nBest) {
+		this.nBest = nBest;
 	}
 }

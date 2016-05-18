@@ -10,37 +10,40 @@ public class GIDNPSO extends PSO {
      int y = 2;//rate of population increase
 	
 	
-	public GIDNPSO(Problem problem, int numberOfRuns){
-		super(problem, numberOfRuns);
+	public GIDNPSO(Problem problem){
+		super(problem);
 		psoType = "GIDNPSO";
+		System.out.println("Commencing PSO GIDN!\n");
 		for(Particle particle : swarm){
 			particle.neighbourhoodNumber = 0;			
 		}	
 	}
-	public Particle createNeighbourhood(int i){
-		swarm.get(i).notNeighbours = swarm;
-		
-		int indexBestParticle = i;
-		int indexLeftNeighbour = (i > 0) ? i - 1 : swarmSize - 1;
-		int indexRightNeighbour = (i < swarmSize - 1) ? i + 1 : 0;		
-				
-		gBestFitness = swarm.get(i).getPBestFitness();
-		double leftNeighborParticlePBestFitness = swarm.get(indexLeftNeighbour).getPBestFitness();
-		double rightNeighborParticlePBestFitness = swarm.get(indexRightNeighbour).getPBestFitness();
-				
-		if (leftNeighborParticlePBestFitness < gBestFitness) {
-			indexBestParticle = indexLeftNeighbour;
-			gBestFitness = leftNeighborParticlePBestFitness;
-		}
-		if (rightNeighborParticlePBestFitness < gBestFitness) {
-			indexBestParticle = indexRightNeighbour;
-			gBestFitness = rightNeighborParticlePBestFitness;
-		}
-		return swarm.get(indexBestParticle);
+	public void createNeighbourhood(){
+		for(int i = 0; i < swarm.size(); i++){
+			swarm.get(i).notNeighbours = new ArrayList<Particle>(swarm);
+			//if i>0 leftNeighbour = i-1, if i=0 leftNeighbour = last particle
+			int indexLeftNeighbour = (i > 0) ? i - 1 : swarmSize - 1;
+			//if particle isn't last particle rightNeighbour = i+1, if i=last particle rightNeighbour = first particle
+			int indexRightNeighbour = (i < swarmSize - 1) ? i + 1 : 0;		
+			
+			Particle particle = swarm.get(i);
+			Particle leftNeighbour = swarm.get(indexLeftNeighbour);
+			Particle rightNeighbour = swarm.get(indexRightNeighbour);
+			
+			particle.addNeighbour(particle);
+			particle.removeNotNeighbours(particle);
+			
+			particle.addNeighbour(leftNeighbour);
+			particle.removeNotNeighbours(leftNeighbour);
+			
+			particle.addNeighbour(rightNeighbour);
+			particle.removeNotNeighbours(rightNeighbour);
+		}		
 	}
 	
 	public void updateNeighbourhoods(){
 		Random random = new Random();
+		
 		for(Particle particle : swarm){
 			double previousH = particle.neighbourhoodNumber;
 			
@@ -58,23 +61,24 @@ public class GIDNPSO extends PSO {
                     int neighbour = (int) (random.nextDouble() * particle.notNeighbours.size());
                     particle.addNeighbour(particle.notNeighbours.get(neighbour));					
 				}
-			}
-			
-			
-		}
-		
-		
+			}						
+		}				
 	}
 
 	@Override
-	public Particle calculateNeighbourhoodBest(int i) {
-		for(Particle particle : neighbourhood){
-			if (particle.getFitness() < nBestFitness) {
-				nBest = particle.getPosition().clone();
-				nBestFitness = particle.getFitness();				
-			}			
+	public double[] calculateNeighbourhoodBest(int i) {
+		updateNeighbourhoods();
+		Particle particle = swarm.get(i);		
+		double[] nBest = particle.getPBest().clone();
+		double nBestFitness = Double.MAX_VALUE;
+		for(Particle neighbour : particle.neighbourhood){			
+			if (neighbour.getPBestFitness() < nBestFitness) {
+				nBest = neighbour.getPBest().clone();
+				//neighbour.nBest = neighbour.getPosition().clone();
+				nBestFitness = neighbour.getFitness();				
+			}
 		}
-		return gBestParticle;
+		return nBest;
 		// TODO Auto-generated method stub		
 	}
 

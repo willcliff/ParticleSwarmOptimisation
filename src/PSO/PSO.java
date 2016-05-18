@@ -23,7 +23,7 @@ public abstract class PSO {
 	int iteration;
 	int numberOfRuns = 5;
 	double[] averageFitnesses = new double[iterations];
-	double[] avergaeBestFitness = new double[numberOfRuns];
+	
 	// stores gBestFitness after each iteration
 	Date dateTime = new Date();
 	SimpleDateFormat ft = new SimpleDateFormat ("E yyyy-MM-dd'at'hhmmss a zzz");
@@ -39,9 +39,9 @@ public abstract class PSO {
 	
 	double standardDeviation;
 	Particle gBestParticle; // globally best particle
-
-	public PSO(Problem problem, int numberOfRuns) {
-		this.numberOfRuns = numberOfRuns;
+	
+	
+	public PSO(Problem problem) {
 		this.problem = problem;		
 	}
 
@@ -50,30 +50,37 @@ public abstract class PSO {
 		// this.swarmSize = swarmSize;
 		this.problem = problem;
 		this.standardDeviation = standardDeviation;
+		
 	}
 
-	private void initialise() {		
+	private void initialise() {	
 		// this.dimensions = problem.getDimensions();
-
+		//******Move into constructor and then create neighbourhoods in extended class constructors
+		
+		// define and initialise gBest for first iteration
+		//instead of below use calculateGBest(i); method???
 		for (int i = 0; i < swarmSize; i++) {
 			// fitness = problem.getFitness(position);
 			Particle particle = new Particle(problem);
+			particle.particleNo = i+1;
 			swarm.add(particle);			
 		}
-		// define and initialise gBest for first iteration
-		//instead of below use calculateGBest(i); method???
 		gBestParticle = swarm.get(0);
 		gBest = gBestParticle.getPosition().clone();
-		gBestFitness = gBestParticle.getFitness();
+		gBestFitness = swarm.get(0).getFitness();
+		calculateGBest();
+		createNeighbourhood();
 		
 		//System.out.println("     \nGBestFitness Initialised: " + gBestParticle.getPBestFitness());
 		//System.out.println("     GBestFitness Initialised: " + gBestFitness);		
 	}
 
+	abstract void createNeighbourhood();
+
 	public void iterate() {
 		double[] swarmFitnesses = new double[swarmSize];
 		for (int j = 0; j < iterations; j++) {
-			//iteration = j;															
+			iteration = j;															
 		
 		
 		// calculate the pBest and gBest positions
@@ -109,12 +116,16 @@ public abstract class PSO {
 
 				// update the velocity and positions
 				// step 3 update the velocity and position
-				Particle bestParticleNeighbourhood = calculateNeighbourhoodBest(i);
-				particle.update(bestParticleNeighbourhood.getPBest());
+				
+				//change particle to double and return nBest!
+				//Particle bestNeighbour = calculateNeighbourhoodBest(i);
+				//particle.update(bestNeighbour.getPBest());
+				double[] lBest = calculateNeighbourhoodBest(i).clone();
+				particle.update(lBest);
 
 				// step 4 update the position
 				// particle.updatePosition();
-
+				//calculateGBest();
 				// update fitness
 				// fitness = problem.getFitness(position);
 				swarmFitnesses[i] = particle.getFitness();
@@ -123,7 +134,7 @@ public abstract class PSO {
 		averageFitnesses[j] += gBestFitness;
 		//System.out.println("ITERATION " + iteration + ": ");
 		//System.out.println("     SwarmFitnesses: " + Arrays.toString(swarmFitnesses));
-		//System.out.println("     Partcile: " + gBestParticle.particleNo + "\tGBestFitnessA: " + gBestParticle.getFitness());
+		//System.out.println("     Particle: " + gBestParticle.particleNo + "\tGBestFitnessA: " + gBestParticle.getFitness());
 		//System.out.println("     GBestFitnessB: " + gBestFitness);
 		
 		/*
@@ -147,18 +158,23 @@ public abstract class PSO {
 			e.printStackTrace();
 		}// iteration++;*/
 	}
-	abstract Particle calculateNeighbourhoodBest(int i);
+	abstract double[] calculateNeighbourhoodBest(int i);
+	//abstract Particle calculateNeighbourhoodBest(int i);
 
 	// method to calculate the gBest particle
 	public void calculateGBest(){
+		//gBestParticle = Collections.min(swarm);
+		//gBestFitness = gBestParticle.getFitness(); // globally best fitness
+		//gBest = gBestParticle.getPosition().clone();
 		for(Particle particle : swarm){
-			if (particle.getFitness() < gBestFitness) {
-				gBestParticle = particle;
-				gBest = particle.getPosition().clone();
-				gBestFitness = particle.getFitness();				
-			}
 			
-		}
+			//System.out.print(particle.getFitness() + ", ");
+			if (particle.getPBestFitness() < gBestFitness) {
+				gBestParticle = particle;	
+				gBestFitness = particle.getPBestFitness();							
+				gBest = particle.getPBest().clone();								
+			}						
+		}	
 	}
 
 	//public abstract Particle bestNeighbour(int i);
@@ -169,29 +185,31 @@ public abstract class PSO {
 		
 		double total = 0;
 		double finalAverage;
-		for (int i = 0; i < numberOfRuns; i++){
+		double[] avergaeBestFitness = new double[numberOfRuns];
+				//for (int i = 0; i < numberOfRuns; i++){
 			
-			System.out.println("     Pre Initialisation gBestFitness: " + gBestFitness);
+			//System.out.println("     Pre Initialisation gBestFitness: " + gBestFitness);
 			initialise();
 			iterate();
-			calculateGBest();
-			System.out.println("     Fitness: " + (gBestParticle.getFitness()));
+			//System.out.println("Both Fitnesses\t"+gBestFitness + " + " + gBestParticle.getFitness());
+			//calculateGBest();
+			System.out.println("     gBestParticle Fitness: " + (gBestParticle.getPBestFitness()));
 			System.out.println("     gBestFitness: " + gBestFitness);
-			System.out.println("\n");
+			//System.out.println("\n");
 			
 			
 			
-			avergaeBestFitness[i] = gBestFitness;
-			total += avergaeBestFitness[i];
+			//avergaeBestFitness[i] = gBestFitness;
+			//total += avergaeBestFitness[i];
 		
-			gBestFitness = 0; //reset the gBest Fitness
-		}
-		System.out.println("     Average BestValues: "
+			//gBestFitness = 0; //reset the gBest Fitness
+		//}
+		/*System.out.println("     Average BestValues: "
 				+ Arrays.toString(avergaeBestFitness));
 		
 			finalAverage = total / numberOfRuns;
 			System.out.println("     Final Average: " + finalAverage);
-			System.out.println("\n");
+			System.out.println("\n");*/
 		try {
 			createAvSummary(averageFitnesses, date, numberOfRuns);
 		} catch (IOException e) {
@@ -227,7 +245,7 @@ public abstract class PSO {
 		//System.out.println("     Final Average: " + finalAverage);
 		//System.out.println("\n");
 		
-		
+				//}	
 		
 	}
 	
