@@ -1,6 +1,7 @@
 package PSO;
 
 import java.io.BufferedWriter;
+import java.util.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
@@ -21,9 +22,9 @@ public class PSOMain {
 	}
 	public static void begin() throws Exception {
 		int function = 1;
+		long startTime = new Date( ).getTime();
 		
-		
-		for(int j = 1; j<=7; j++){
+		for(int j = 6; j<=30; j++){
 			int numberOfRuns = 25;
 			double total = 0;
 			double finalAverage;
@@ -42,8 +43,8 @@ public class PSOMain {
 				// Problem problem = new Problem(function);
 
 				//BasicTestFunc problem = new BasicTestFunc(j);
-				BasicTestFunc problem = new BasicTestFunc(function);
-				//TestFunc14 problem = new TestFunc14(function);
+				//BasicTestFunc problem = new BasicTestFunc(j);
+				TestFunc14 problem = new TestFunc14(j);
 				//LocalPSO pso = new LocalPSO(problem);
 				GlobalPSO pso = new GlobalPSO(problem);
 				//VonNeumann pso = new VonNeumann(problem);
@@ -63,10 +64,10 @@ public class PSOMain {
 				//TestFunc14 problem1 = new TestFunc14(function);
 				//LocalPSO pso1 = new LocalPSO(problem1);
 				//pso1.execute();
-				dir = "C:/Users/William/Documents/NUIG Masters/Year2/PSOResults/BasicFunctions";
+				dir = "//fs2/14232817/Desktop/PSOResults/BasicFunctions";
 				fileName = dir + "//" + pso.psoType + problem.functionName + ".dat";
 				
-				dir1 = "C:/Users/William/Documents/NUIG Masters/Year2/PSOResults/SummaryResults";
+				dir1 = "//fs2/14232817/Desktop/PSOResults/SummaryResults";
 				fileName1 = dir1 + "//Summary" + pso.psoType + problem.functionName + ".txt";
 				
 				
@@ -76,6 +77,8 @@ public class PSOMain {
 				total += avergaeBestFitness[r];
 				
 			}			
+			long endTime = new Date( ).getTime();
+			long difference = endTime - startTime;
 			
 			System.out.println("     Average BestValuesMAIN: "
 					+ Arrays.toString(avergaeBestFitness));
@@ -83,6 +86,7 @@ public class PSOMain {
 			finalAverage = total / numberOfRuns;
 			System.out.println("     Final AverageMAIN: " + finalAverage);
 			System.out.println("\n");
+			System.out.println("Time Elapsed: " + difference);
 			
 			BufferedWriter output;
 			output = new BufferedWriter(new FileWriter(fileName));
@@ -98,10 +102,10 @@ public class PSOMain {
 			output1.write("\n");
 			output1.write("Final Average: " + finalAverage);
 			output1.write("\n");
-			output1.close();
-			
-			System.out.println("\nFile Created!\n");
+			output1.write("Time Elapsed: " + difference);
+			output1.close();			
 		}
+		
 	}
 	
 	/*public void createAvSummary(double averageFitnesses[], String date, int noRuns) throws IOException{

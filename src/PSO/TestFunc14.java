@@ -28,94 +28,123 @@ public class TestFunc14 extends Problem{
 		switch(function){
 		
 		case 1: //Ellipsoidal
-			functionName = "Ellipsoidal Function";
+			functionName = "f" + function;
 			System.out.println("Ellipsoidal Function");			
 			break;
 		case 2:
+			functionName = "f" + function;
 			System.out.println("bent_cigar_func Function");	
 			break;
-		case 3:	
+		case 3:
+			functionName = "f" + function;
 			System.out.println("discus_func Function");	
 			break;
-		case 4:	
+		case 4:
+			functionName = "f" + function;
 			System.out.println("rosenbrock_func Function");	
 			break;
 		case 5:
+			functionName = "f" + function;
 			System.out.println("ackley_func Function");	
 			break;
 		case 6:
+			functionName = "f" + function;
 			System.out.println("weierstrass_func Function");	
 			break;
-		case 7:	
+		case 7:
+			functionName = "f" + function;
 			System.out.println("griewank_func Function");	
 			break;
-		case 8:	
+		case 8:
+			functionName = "f" + function;
 			System.out.println("rastrigin_func Function");	
 			break;
-		case 9:	
+		case 9:
+			functionName = "f" + function;
 			System.out.println("rastrigin_func non rotated Function");	
 			break;
-		case 10:	
+		case 10:
+			functionName = "f" + function;
 			System.out.println("schwefel_func Function");	
 			break;
-		case 11:	
+		case 11:
+			functionName = "f" + function;
 			System.out.println("schwefel_func non rotated Function");	
 			break;
-		case 12:	
+		case 12:
+			functionName = "f" + function;
 			System.out.println("katsuura_func Function");	
 			break;
 		case 13: //happycat_func
+			functionName = "f" + function;
 			System.out.println("happycat_func");			
 			break;
-		case 14:	
+		case 14:
+			functionName = "f" + function;
 			System.out.println("hgbat_func");
 			break;
-		case 15:	
+		case 15:
+			functionName = "f" + function;
 			System.out.println("grie_rosen_func");
 			break;
-		case 16:	
+		case 16:
+			functionName = "f" + function;
 			System.out.println("escaffer6_func");
 			break;
-		case 17:	
+		case 17:
+			functionName = "f" + function;
 			System.out.println("hf01");
 			break;
-		case 18:	
+		case 18:
+			functionName = "f" + function;
 			System.out.println("hf02");
 			break;
-		case 19:	
+		case 19:
+			functionName = "f" + function;
 			System.out.println("hf03");
 			break;
-		case 20:	
+		case 20:
+			functionName = "f" + function;
 			System.out.println("hf04");
 			break;
-		case 21:	
+		case 21:
+			functionName = "f" + function;
 			System.out.println("hf05");
 			break;
-		case 22:	
+		case 22:
+			functionName = "f" + function;
 			System.out.println("hf06");
 			break;
-		case 23:	
+		case 23:
+			functionName = "f" + function;
 			System.out.println("cf01");
 			break;
-		case 24:	
+		case 24:
+			functionName = "f" + function;
 			System.out.println("cf02");
 			break;
-		case 25:	
+		case 25:
+			functionName = "f" + function;
 			System.out.println("cf03");
 			break;
 		case 26:
+			functionName = "f" + function;
 			System.out.println("cf04");
 			break;
 		case 27:
+			functionName = "f" + function;
 			System.out.println("cf05");
 			break;
 		case 28:
+			functionName = "f" + function;
 			System.out.println("cf06");
 			break;
 		case 29:
+			functionName = "f" + function;
 			System.out.println("cf08");
 			break;
 		case 30:
+			functionName = "f" + function;
 			System.out.println("cf08");
 			break;
 		}
