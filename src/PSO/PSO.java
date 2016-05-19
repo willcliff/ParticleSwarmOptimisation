@@ -18,10 +18,10 @@ import java.text.*;
 public abstract class PSO {
 	Problem problem;
 	//int function = 1;
-	int iterations = 10000;
-	int swarmSize = 50;
+	public int iterations = 1000;
+	int swarmSize = 10;
 	int iteration;
-	int numberOfRuns = 5;
+	int numberOfRuns = 1;
 	double[] averageFitnesses = new double[iterations];
 	
 	// stores gBestFitness after each iteration
@@ -34,11 +34,12 @@ public abstract class PSO {
 	//date = date.replace();
 	ArrayList<Particle> swarm = new ArrayList<Particle>();
 	double gBestFitness; // globally best fitness
-	double[] gBest; // globally(swarms) best position
+	double[] gBest;
+	Particle gBestParticle;// globally(swarms) best position
 	protected String psoType = "Standard";	 // int dimensions = problem.getDimensions();
 	
 	double standardDeviation;
-	Particle gBestParticle; // globally best particle
+	 // globally best particle
 	
 	
 	public PSO(Problem problem) {
@@ -186,7 +187,7 @@ public abstract class PSO {
 		double total = 0;
 		double finalAverage;
 		double[] avergaeBestFitness = new double[numberOfRuns];
-				//for (int i = 0; i < numberOfRuns; i++){
+		for (int i = 0; i < numberOfRuns; i++){
 			
 			//System.out.println("     Pre Initialisation gBestFitness: " + gBestFitness);
 			initialise();
@@ -194,28 +195,30 @@ public abstract class PSO {
 			//System.out.println("Both Fitnesses\t"+gBestFitness + " + " + gBestParticle.getFitness());
 			//calculateGBest();
 			System.out.println("     gBestParticle Fitness: " + (gBestParticle.getPBestFitness()));
-			System.out.println("     gBestFitness: " + gBestFitness);
+			System.out.println("     gBestFitness: " + gBestFitness + "\n");
 			//System.out.println("\n");
 			
 			
 			
 			//avergaeBestFitness[i] = gBestFitness;
-			//total += avergaeBestFitness[i];
+			// += avergaeBestFitness[i];
 		
-			//gBestFitness = 0; //reset the gBest Fitness
-		//}
+			/*gBestFitness = Double.MAX_VALUE;
+			gBest = null;
+			gBestParticle = null;//reset the gBest Fitness*/
+		}
 		/*System.out.println("     Average BestValues: "
 				+ Arrays.toString(avergaeBestFitness));
 		
 			finalAverage = total / numberOfRuns;
 			System.out.println("     Final Average: " + finalAverage);
-			System.out.println("\n");*/
+			System.out.println("\n");
 		try {
 			createAvSummary(averageFitnesses, date, numberOfRuns);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 			/*for (int i = 0; i < iterations; i++) {
 				iteration = i;
 				System.out.println("\nSolution found at iteration " + (i)
@@ -245,8 +248,7 @@ public abstract class PSO {
 		//System.out.println("     Final Average: " + finalAverage);
 		//System.out.println("\n");
 		
-				//}	
-		
+		//}	
 	}
 	
 	public void createAvSummary(double averageFitnesses[], String date, int noRuns) throws IOException{
@@ -261,10 +263,7 @@ public abstract class PSO {
         }
 		output.close();
 		System.out.println("\nFile Created!\n");
-        //gnuPlot(fileName, date);
-		
-		
-		
+        //gnuPlot(fileName, date);	
 	}
 	
 	public void gnuPlot(String datFile, String date) throws IOException

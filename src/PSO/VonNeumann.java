@@ -3,7 +3,9 @@ package PSO;
 public class VonNeumann extends PSO{
 
 	public VonNeumann(Problem problem) {
-		super(problem);		
+		super(problem);	
+		psoType = "vonNeumann";
+		System.out.println("Commencing vonNeumann PSO!\n");
 		// TODO Auto-generated constructor stub
 	}
 	
