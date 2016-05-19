@@ -18,8 +18,8 @@ import java.text.*;
 public abstract class PSO {
 	Problem problem;
 	//int function = 1;
-	public int iterations = 1000;
-	int swarmSize = 10;
+	public int iterations = 10000;
+	int swarmSize = 50;
 	int iteration;
 	int numberOfRuns = 1;
 	double[] averageFitnesses = new double[iterations];
