@@ -24,12 +24,13 @@ public class PSOMain {
 		int function = 1;
 		long startTime = new Date( ).getTime();
 		
-		for(int j = 2; j<=2; j++){
-			int numberOfRuns = 1;
+		for(int j = 1; j<=1; j++){
+			int numberOfRuns = 5;
 			double total = 0;
 			double finalAverage;
+			double standardDeviation = 0;
 			double[] avergaeBestFitness = new double[numberOfRuns];
-			double[] averageSwarmFitnesses = new double[10];			
+			double[] averageSwarmFitnesses = new double[10000];			
 			String dir;
 			String fileName = "DefaultFile";
 			String dir1;
@@ -64,10 +65,13 @@ public class PSOMain {
 				//TestFunc14 problem1 = new TestFunc14(function);
 				//LocalPSO pso1 = new LocalPSO(problem1);
 				//pso1.execute();
-				dir = "C:/Users/William/Documents/NUIG Masters/Year2/PSOResults/BasicFunctions";
+				
+				dir = "//fs2/14232817/Desktop/PSOResults/BasicFunctions";
+				//dir = "C:/Users/William/Documents/NUIG Masters/Year2/PSOResults/BasicFunctions";
 				fileName = dir + "//" + pso.psoType + problem.functionName + ".dat";
 				
-				dir1 = "C:/Users/William/Documents/NUIG Masters/Year2/PSOResults/SummaryResults";
+				dir1 = "//fs2/14232817/Desktop/PSOResults/SummaryResults";
+				//dir1 = "C:/Users/William/Documents/NUIG Masters/Year2/PSOResults/SummaryResults";
 				fileName1 = dir1 + "//Summary" + pso.psoType + problem.functionName + ".txt";
 				
 				
@@ -76,7 +80,10 @@ public class PSOMain {
 				avergaeBestFitness[r] = pso.gBestFitness;
 				total += avergaeBestFitness[r];
 				
-			}			
+			}
+			//standard deviation
+			
+			
 			long endTime = new Date( ).getTime();
 			long difference = endTime - startTime;
 			
@@ -84,7 +91,16 @@ public class PSOMain {
 					+ Arrays.toString(avergaeBestFitness));
 			
 			finalAverage = total / numberOfRuns;
+			
+			for (int r = 0; r < numberOfRuns; r++) {
+				//double standardDeviation = new double[r];
+				
+				standardDeviation += (finalAverage - avergaeBestFitness[r]) * (finalAverage - avergaeBestFitness[r]);
+				standardDeviation = Math.sqrt(standardDeviation/numberOfRuns);
+			}
+			
 			System.out.println("     Final AverageMAIN: " + finalAverage);
+			System.out.println("     Standard Deviation: " + standardDeviation);
 			System.out.println("\n");
 			System.out.println("Time Elapsed: " + difference);
 			
@@ -99,6 +115,8 @@ public class PSOMain {
 			BufferedWriter output1;
 			output1 = new BufferedWriter(new FileWriter(fileName1));			
 			output1.write("Average Best Values: " + Arrays.toString(avergaeBestFitness));
+			output1.write("\n");
+			output1.write("Standard Deviation: " + standardDeviation);
 			output1.write("\n");
 			output1.write("Final Average: " + finalAverage);
 			output1.write("\n");

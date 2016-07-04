@@ -25,7 +25,7 @@ public class GIDNPSONEW extends PSO {
 			particle.notNeighbours = new ArrayList<Particle>(swarm);
 			
 			
-			//Alternative method with changeable b
+			/*//Alternative method with changeable b
 			particle.addNeighbour(particle);
 			particle.removeNotNeighbours(particle);
 			System.out.println("notNeighbours:" + particle.notNeighbours.size());
@@ -38,14 +38,14 @@ public class GIDNPSONEW extends PSO {
 				particle.addNeighbour(newParticle);
 				particle.removeNotNeighbours(newParticle);
 			}
-			System.out.println("notNeighboursNew:" + particle.notNeighbours.size());
+			System.out.println("notNeighboursNew:" + particle.notNeighbours.size());*/
 			//GIDN Method
 			//if i>0 leftNeighbour = i-1, if i=0 leftNeighbour = last particle
-			/*int indexLeftNeighbour = (i > 0) ? i - 1 : swarmSize - 1;
+			int indexLeftNeighbour = (i > 0) ? i - 1 : swarmSize - 1;
 			//if particle isn't last particle rightNeighbour = i+1, if i=last particle rightNeighbour = first particle
 			int indexRightNeighbour = (i < swarmSize - 1) ? i + 1 : 0;		
 			
-			Particle particle = swarm.get(i);
+			//Particle particle = swarm.get(i);
 			Particle leftNeighbour = swarm.get(indexLeftNeighbour);
 			Particle rightNeighbour = swarm.get(indexRightNeighbour);
 			
@@ -56,8 +56,8 @@ public class GIDNPSONEW extends PSO {
 			particle.removeNotNeighbours(leftNeighbour);
 			
 			particle.addNeighbour(rightNeighbour);
-			particle.removeNotNeighbours(rightNeighbour);*/
-		}		
+			particle.removeNotNeighbours(rightNeighbour);
+		}	
 	}
 	
 	@Override
@@ -117,7 +117,9 @@ public class GIDNPSONEW extends PSO {
 			//double h = (((iteration + 1.0) / iterations) * ((iteration + 1.0) / iterations)) * swarmSize + b;
 			//System.out.println("previoush = " + previousH);
 			//double h = Math.pow(((iteration + 1.0) / iterations), y) * swarmSize + b;
-			double h = Math.pow((1/evoFactor), y) * swarmSize + b;
+			//double h = Math.pow((1/evoFactor), y) * swarmSize + b;
+			//double h = Math.pow((evoFactor), y) * swarmSize + b;
+			double h = (1/evoFactor) * swarmSize + b;
 			//System.out.println("h = " + h);
 			h = Math.floor(h);
 			particle.neighbourhoodNumber = h;
