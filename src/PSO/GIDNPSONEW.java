@@ -117,9 +117,9 @@ public class GIDNPSONEW extends PSO {
 			//double h = (((iteration + 1.0) / iterations) * ((iteration + 1.0) / iterations)) * swarmSize + b;
 			//System.out.println("previoush = " + previousH);
 			//double h = Math.pow(((iteration + 1.0) / iterations), y) * swarmSize + b;
-			//double h = Math.pow((1/evoFactor), y) * swarmSize + b;
+			double h = Math.pow((1/evoFactor), y) * swarmSize + b;
 			//double h = Math.pow((evoFactor), y) * swarmSize + b;
-			double h = (1/evoFactor) * swarmSize + b;
+			//double h = (1/evoFactor) * swarmSize + b;
 			//System.out.println("h = " + h);
 			h = Math.floor(h);
 			particle.neighbourhoodNumber = h;

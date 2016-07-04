@@ -24,8 +24,8 @@ public class PSOMain {
 		int function = 1;
 		long startTime = new Date( ).getTime();
 		
-		for(int j = 1; j<=1; j++){
-			int numberOfRuns = 5;
+		for(int j = 1; j<=30; j++){
+			int numberOfRuns = 25;
 			double total = 0;
 			double finalAverage;
 			double standardDeviation = 0;
@@ -43,8 +43,8 @@ public class PSOMain {
 				// pso.execute();
 				// Problem problem = new Problem(function);
 
-				BasicTestFunc problem = new BasicTestFunc(j);
-				//TestFunc14 problem = new TestFunc14(j);
+				//BasicTestFunc problem = new BasicTestFunc(j);
+				TestFunc14 problem = new TestFunc14(j);
 				//LocalPSO pso = new LocalPSO(problem);
 				//GlobalPSO pso = new GlobalPSO(problem);
 				//VonNeumann pso = new VonNeumann(problem);
@@ -91,13 +91,16 @@ public class PSOMain {
 					+ Arrays.toString(avergaeBestFitness));
 			
 			finalAverage = total / numberOfRuns;
-			
+			double temp = 0;
 			for (int r = 0; r < numberOfRuns; r++) {
 				//double standardDeviation = new double[r];
 				
-				standardDeviation += (finalAverage - avergaeBestFitness[r]) * (finalAverage - avergaeBestFitness[r]);
-				standardDeviation = Math.sqrt(standardDeviation/numberOfRuns);
+				temp += (finalAverage - avergaeBestFitness[r]) * (finalAverage - avergaeBestFitness[r]);
+				
 			}
+			standardDeviation = Math.sqrt((temp/(numberOfRuns-1)));
+			double standardDeviationPop;
+			standardDeviationPop = Math.sqrt(temp/numberOfRuns);
 			
 			System.out.println("     Final AverageMAIN: " + finalAverage);
 			System.out.println("     Standard Deviation: " + standardDeviation);
@@ -117,6 +120,8 @@ public class PSOMain {
 			output1.write("Average Best Values: " + Arrays.toString(avergaeBestFitness));
 			output1.write("\n");
 			output1.write("Standard Deviation: " + standardDeviation);
+			output1.write("\n");
+			output1.write("Standard Deviation Population: " + standardDeviationPop);
 			output1.write("\n");
 			output1.write("Final Average: " + finalAverage);
 			output1.write("\n");
