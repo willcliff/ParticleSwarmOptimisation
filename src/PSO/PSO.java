@@ -37,13 +37,14 @@ public abstract class PSO {
 	double[] gBest;
 	Particle gBestParticle;// globally(swarms) best position
 	protected String psoType = "Standard";	 // int dimensions = problem.getDimensions();
-	
-	double standardDeviation;
+	int dimensions; 
+	double standardDeviation;	
 	 // globally best particle
 	
 	
 	public PSO(Problem problem) {
-		this.problem = problem;		
+		this.problem = problem;	
+		dimensions = problem.getDimensions();
 	}
 
 	public PSO(String psoType, int swarmSize, Problem problem, double standardDeviation) {
@@ -79,15 +80,15 @@ public abstract class PSO {
 	abstract void createNeighbourhood();
 
 	public void iterate() {
-		double[] swarmFitnesses = new double[swarmSize];
+		double[] swarmFitnesses = new double[swarmSize];		
 		for (int j = 0; j < iterations; j++) {
-			iteration = j;															
-		
+			iteration = j;
+			System.out.println("Iteration" + j);
+			averageDistance();
 		
 		// calculate the pBest and gBest positions
 			for (int i = 0; i < swarmSize; i++) {
-				Particle particle = swarm.get(i);
-
+				Particle particle = swarm.get(i);				
 				// pass the swarm to calculate the gBest
 				// particle
 				// and fitness
@@ -103,6 +104,9 @@ public abstract class PSO {
 				// for LPSO returns same for GPSO
 				// gBestParticle = bestNeighbour(i);
 				calculateGBest();
+				
+				
+				
 				// gBestFitness = gBestParticle.getPBestFitness();
 
 				// update intertia weight
@@ -122,8 +126,9 @@ public abstract class PSO {
 				//Particle bestNeighbour = calculateNeighbourhoodBest(i);
 				//particle.update(bestNeighbour.getPBest());
 				double[] lBest = calculateNeighbourhoodBest(i).clone();
+				
 				particle.update(lBest);
-
+				
 				// step 4 update the position
 				// particle.updatePosition();
 				//calculateGBest();
@@ -132,12 +137,20 @@ public abstract class PSO {
 				swarmFitnesses[i] = particle.getFitness();
 
 			}
+			//System.out.println("DistancesMain: " + distances);
+			//evoFactor(distances);
+			
+			/*for (Particle particle : swarm){
+				System.out.println("Distances getDistance()1 : " + particle.getDistance());
+			}*/	
 		averageFitnesses[j] += gBestFitness;
 		//System.out.println("ITERATION " + iteration + ": ");
 		//System.out.println("     SwarmFitnesses: " + Arrays.toString(swarmFitnesses));
 		//System.out.println("     Particle: " + gBestParticle.particleNo + "\tGBestFitnessA: " + gBestParticle.getFitness());
+		//System.out.println("     Particle: " + gBestParticle.particleNo + "\tDistance: " + gBestParticle.getDistance());
 		//System.out.println("     GBestFitnessB: " + gBestFitness);
-		
+
+		/////System.out.println("DistancesMain2: " + distances);
 		/*
 		 * for(int i = 0; i < dimensions; i++) { System.out.println("ITERATION "
 		 * + iteration + ": "); System System.out.println("     Best X: " +
@@ -159,13 +172,16 @@ public abstract class PSO {
 			e.printStackTrace();
 		}// iteration++;*/
 	}
+	
+	abstract void averageDistance();
+
 	abstract double[] calculateNeighbourhoodBest(int i);
 	//abstract Particle calculateNeighbourhoodBest(int i);
 
 	// method to calculate the gBest particle
 	public void calculateGBest(){
 		//gBestParticle = Collections.min(swarm);
-		//gBestFitness = gBestParticle.getFitness(); // globally best fitness
+		//gBestFitness = gBestParticle.getPBestFitness(); // globally best fitness
 		//gBest = gBestParticle.getPosition().clone();
 		for(Particle particle : swarm){
 			
@@ -177,6 +193,8 @@ public abstract class PSO {
 			}						
 		}	
 	}
+	
+	
 
 	//public abstract Particle bestNeighbour(int i);
 
@@ -192,6 +210,9 @@ public abstract class PSO {
 			//System.out.println("     Pre Initialisation gBestFitness: " + gBestFitness);
 			initialise();
 			iterate();
+			for (Particle particle : swarm){
+				System.out.println("Distances getDistance()1 : " + particle.getDistance());
+			}
 			//System.out.println("Both Fitnesses\t"+gBestFitness + " + " + gBestParticle.getFitness());
 			//calculateGBest();
 			System.out.println("     gBestParticle Fitness: " + (gBestParticle.getPBestFitness()));

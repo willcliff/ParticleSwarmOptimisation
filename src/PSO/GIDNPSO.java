@@ -45,6 +45,7 @@ public class GIDNPSO extends PSO {
 		Random random = new Random();
 		
 		for(Particle particle : swarm){
+
 			double previousH = particle.neighbourhoodNumber;
 			
 			double h = (((iteration + 1.0) / iterations) * ((iteration + 1.0) / iterations)) * swarmSize + b;
@@ -81,5 +82,9 @@ public class GIDNPSO extends PSO {
 		return nBest;
 		// TODO Auto-generated method stub		
 	}
-
+	@Override
+	void averageDistance() {
+		// TODO Auto-generated method stub
+		
+	}
 }

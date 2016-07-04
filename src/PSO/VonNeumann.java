@@ -74,4 +74,10 @@ public class VonNeumann extends PSO{
 		return nBest;
 	}
 
+	@Override
+	void averageDistance() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

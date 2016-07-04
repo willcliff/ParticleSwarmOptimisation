@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class Particle implements Comparable<Particle> {
 	private double fitness; //particles current fitness
-	private double[] position; //particles position
+	protected double[] position; //particles position
 	private double[] velocity; //particles velocity
 	private double pBestFitness; //particles best fitness
 	private double[] pBest; //particles best position
@@ -27,6 +27,7 @@ public class Particle implements Comparable<Particle> {
 	protected ArrayList<Particle> notNeighbours ;
 	public double neighbourhoodNumber;
 	int dimensions; //dimensions of problem
+	private double distance;
 	Problem problem;
 
 	public Particle(Problem problem) {
@@ -149,6 +150,8 @@ public class Particle implements Comparable<Particle> {
 		}				
 	}
 	
+	
+	
 	public double getFitness() {		
 		return fitness;
 	}	
@@ -171,6 +174,8 @@ public class Particle implements Comparable<Particle> {
 		// TODO Auto-generated method stub
 		return this.getFitness() < par.getFitness() ? -1:1;
 	}
+	
+	
 	public double[] getPosition() {
 		return position;
 	}
@@ -191,5 +196,13 @@ public class Particle implements Comparable<Particle> {
 
 	public void setnBest(double[] nBest) {
 		this.nBest = nBest;
+	}
+
+	public double getDistance() {
+		return distance;
+	}
+
+	public void setDistance(double distance) {
+		this.distance = distance;
 	}
 }

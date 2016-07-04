@@ -24,12 +24,12 @@ public class PSOMain {
 		int function = 1;
 		long startTime = new Date( ).getTime();
 		
-		for(int j = 6; j<=30; j++){
-			int numberOfRuns = 25;
+		for(int j = 2; j<=2; j++){
+			int numberOfRuns = 1;
 			double total = 0;
 			double finalAverage;
 			double[] avergaeBestFitness = new double[numberOfRuns];
-			double[] averageSwarmFitnesses = new double[10000];			
+			double[] averageSwarmFitnesses = new double[10];			
 			String dir;
 			String fileName = "DefaultFile";
 			String dir1;
@@ -42,13 +42,13 @@ public class PSOMain {
 				// pso.execute();
 				// Problem problem = new Problem(function);
 
-				//BasicTestFunc problem = new BasicTestFunc(j);
-				//BasicTestFunc problem = new BasicTestFunc(j);
-				TestFunc14 problem = new TestFunc14(j);
+				BasicTestFunc problem = new BasicTestFunc(j);
+				//TestFunc14 problem = new TestFunc14(j);
 				//LocalPSO pso = new LocalPSO(problem);
-				GlobalPSO pso = new GlobalPSO(problem);
+				//GlobalPSO pso = new GlobalPSO(problem);
 				//VonNeumann pso = new VonNeumann(problem);
 				//GIDNPSO pso = new GIDNPSO(problem);
+				GIDNPSONEW pso = new GIDNPSONEW(problem);
 				pso.execute();
 				
 				//BasicTestFunc problem1 = new BasicTestFunc(j);
@@ -64,10 +64,10 @@ public class PSOMain {
 				//TestFunc14 problem1 = new TestFunc14(function);
 				//LocalPSO pso1 = new LocalPSO(problem1);
 				//pso1.execute();
-				dir = "//fs2/14232817/Desktop/PSOResults/BasicFunctions";
+				dir = "C:/Users/William/Documents/NUIG Masters/Year2/PSOResults/BasicFunctions";
 				fileName = dir + "//" + pso.psoType + problem.functionName + ".dat";
 				
-				dir1 = "//fs2/14232817/Desktop/PSOResults/SummaryResults";
+				dir1 = "C:/Users/William/Documents/NUIG Masters/Year2/PSOResults/SummaryResults";
 				fileName1 = dir1 + "//Summary" + pso.psoType + problem.functionName + ".txt";
 				
 				

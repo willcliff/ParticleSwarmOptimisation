@@ -1,5 +1,6 @@
 package PSO;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 public class LocalPSO extends PSO{
@@ -43,6 +44,11 @@ public class LocalPSO extends PSO{
 	void createNeighbourhood() {
 		// TODO Auto-generated method stub
 		
-	}	
-	
+	}
+
+	@Override
+	void averageDistance() {
+		// TODO Auto-generated method stub
+		
+	}
 }
