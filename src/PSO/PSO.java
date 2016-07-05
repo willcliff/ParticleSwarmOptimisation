@@ -21,7 +21,7 @@ public abstract class PSO {
 	public int iterations = 10000;
 	int swarmSize = 50;
 	int iteration;
-	int numberOfRuns = 1;
+	//int numberOfRuns = 1;
 	double[] averageFitnesses = new double[iterations];
 	
 	// stores gBestFitness after each iteration
@@ -83,7 +83,7 @@ public abstract class PSO {
 		double[] swarmFitnesses = new double[swarmSize];		
 		for (int j = 0; j < iterations; j++) {
 			iteration = j;
-			System.out.println("Iteration" + j);
+			//System.out.println("Iteration" + j);
 			averageDistance();
 		
 		// calculate the pBest and gBest positions
@@ -202,17 +202,13 @@ public abstract class PSO {
 		//double[] averageValues = new double[numberOfRuns];
 		
 		
-		double total = 0;
-		double finalAverage;
-		double[] avergaeBestFitness = new double[numberOfRuns];
-		for (int i = 0; i < numberOfRuns; i++){
+		
+		
 			
 			//System.out.println("     Pre Initialisation gBestFitness: " + gBestFitness);
 			initialise();
 			iterate();
-			for (Particle particle : swarm){
-				System.out.println("Distances getDistance()1 : " + particle.getDistance());
-			}
+			
 			//System.out.println("Both Fitnesses\t"+gBestFitness + " + " + gBestParticle.getFitness());
 			//calculateGBest();
 			System.out.println("     gBestParticle Fitness: " + (gBestParticle.getPBestFitness()));
@@ -226,8 +222,7 @@ public abstract class PSO {
 		
 			/*gBestFitness = Double.MAX_VALUE;
 			gBest = null;
-			gBestParticle = null;//reset the gBest Fitness*/
-		}
+			gBestParticle = null;//reset the gBest Fitness*/		
 		/*System.out.println("     Average BestValues: "
 				+ Arrays.toString(avergaeBestFitness));
 		

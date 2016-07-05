@@ -24,7 +24,7 @@ public class PSOMain {
 		int function = 1;
 		long startTime = new Date( ).getTime();
 		
-		for(int j = 1; j<=30; j++){
+		for(int j = 1; j<=7; j++){
 			int numberOfRuns = 25;
 			double total = 0;
 			double finalAverage;
@@ -43,8 +43,8 @@ public class PSOMain {
 				// pso.execute();
 				// Problem problem = new Problem(function);
 
-				//BasicTestFunc problem = new BasicTestFunc(j);
-				TestFunc14 problem = new TestFunc14(j);
+				BasicTestFunc problem = new BasicTestFunc(j);
+				//TestFunc14 problem = new TestFunc14(j);
 				//LocalPSO pso = new LocalPSO(problem);
 				//GlobalPSO pso = new GlobalPSO(problem);
 				//VonNeumann pso = new VonNeumann(problem);

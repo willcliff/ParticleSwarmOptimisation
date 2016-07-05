@@ -10,6 +10,7 @@ public class GIDNPSONEW extends PSO {
 	 int b = 2;//initial number of neighbours
      double y = 2;//rate of population increase
      double evoFactor;
+     String stateFactor;
 	
 	public GIDNPSONEW(Problem problem){
 		super(problem);
@@ -25,21 +26,22 @@ public class GIDNPSONEW extends PSO {
 			particle.notNeighbours = new ArrayList<Particle>(swarm);
 			
 			
-			/*//Alternative method with changeable b
+			//Alternative method with changeable b
 			particle.addNeighbour(particle);
 			particle.removeNotNeighbours(particle);
-			System.out.println("notNeighbours:" + particle.notNeighbours.size());
+			//System.out.println("notNeighbours:" + particle.notNeighbours.size());
 			for(int j = 0; j < b; j++){
-				System.out.println("notNeighboursChanging:" + particle.notNeighbours.size());
+				//System.out.println("notNeighboursChanging:" + particle.notNeighbours.size());
 				Random random = new Random();
 				int selectedParticle = random.nextInt((particle.notNeighbours.size() - 0) + 1) + 0;
-				System.out.println("selectedParticle:" + selectedParticle);
+				//System.out.println("selectedParticle:" + selectedParticle);
 				Particle newParticle = swarm.get(selectedParticle);
 				particle.addNeighbour(newParticle);
 				particle.removeNotNeighbours(newParticle);
 			}
-			System.out.println("notNeighboursNew:" + particle.notNeighbours.size());*/
-			//GIDN Method
+			//System.out.println("notNeighboursNew:" + particle.notNeighbours.size());
+			
+			/*//GIDN Method
 			//if i>0 leftNeighbour = i-1, if i=0 leftNeighbour = last particle
 			int indexLeftNeighbour = (i > 0) ? i - 1 : swarmSize - 1;
 			//if particle isn't last particle rightNeighbour = i+1, if i=last particle rightNeighbour = first particle
@@ -56,7 +58,7 @@ public class GIDNPSONEW extends PSO {
 			particle.removeNotNeighbours(leftNeighbour);
 			
 			particle.addNeighbour(rightNeighbour);
-			particle.removeNotNeighbours(rightNeighbour);
+			particle.removeNotNeighbours(rightNeighbour);*/
 		}	
 	}
 	
@@ -83,6 +85,8 @@ public class GIDNPSONEW extends PSO {
 	
 	/*protected double[] calculateNeighbourhoodBest(int i) {
 		//System.out.println("Gbest particle from local typology!");
+		
+		if(stateFactor == "Exploration" ||  stateFactor == "Jump Out" || stateFactor == "Exploitation"){
 		int indexBestParticle = i;
 		int indexLeftNeighbour = (i > 0) ? i - 1 : swarmSize - 1;
 		int indexRightNeighbour = (i < swarmSize - 1) ? i + 1 : 0;		
@@ -99,12 +103,15 @@ public class GIDNPSONEW extends PSO {
 			indexBestParticle = indexRightNeighbour;
 			nBestFitness = rightNeighborParticlePBestFitness;
 		}
-		
-		
 		return swarm.get(indexBestParticle).getPBest();
+		}
+		else{
+			return gBest;
+		}
+				
 		//return swarm.get(indexBestParticle);
 		
-}*/
+	}*/
 	
 	public void updateNeighbourhoods(Particle particle){//should loop be here?
 		Random random = new Random();
@@ -117,9 +124,9 @@ public class GIDNPSONEW extends PSO {
 			//double h = (((iteration + 1.0) / iterations) * ((iteration + 1.0) / iterations)) * swarmSize + b;
 			//System.out.println("previoush = " + previousH);
 			//double h = Math.pow(((iteration + 1.0) / iterations), y) * swarmSize + b;
-			double h = Math.pow((1/evoFactor), y) * swarmSize + b;
+			//double h = Math.pow((1/evoFactor), y) * swarmSize + b;
 			//double h = Math.pow((evoFactor), y) * swarmSize + b;
-			//double h = (1/evoFactor) * swarmSize + b;
+			double h = (1/evoFactor) * swarmSize + b;
 			//System.out.println("h = " + h);
 			h = Math.floor(h);
 			particle.neighbourhoodNumber = h;
@@ -185,14 +192,14 @@ public class GIDNPSONEW extends PSO {
 		evoFactor = ((gBestDistance - minDistance)/(maxDistance - minDistance));
 		//evoFactor = ((maxDistance - gBestDistance)/(maxDistance - minDistance));
 		
-		System.out.println("DistancesEvo: " + distances);
-		System.out.println("Evo Factor: " + evoFactor + "\n");
+		//System.out.println("DistancesEvo: " + distances);
+		//System.out.println("Evo Factor: " + evoFactor + "\n");
 		evoDecision(evoFactor);
 		return evoFactor;
 	}
 	
 	public void evoDecision(double evoFactor){
-		String stateFactor;
+		
 		if(evoFactor > .6 && evoFactor <= .9){
 			stateFactor = "Exploration";
 			y = 2;
