@@ -23,7 +23,7 @@ public abstract class PSO {
 	int iteration;
 	//int numberOfRuns = 1;
 	double[] averageFitnesses = new double[iterations];
-	
+	double[] averageNeighbourhood = new double[iterations];
 	// stores gBestFitness after each iteration
 	Date dateTime = new Date();
 	SimpleDateFormat ft = new SimpleDateFormat ("E yyyy-MM-dd'at'hhmmss a zzz");
@@ -80,15 +80,22 @@ public abstract class PSO {
 	abstract void createNeighbourhood();
 
 	public void iterate() {
-		double[] swarmFitnesses = new double[swarmSize];		
+		double[] swarmFitnesses = new double[swarmSize];
+		
 		for (int j = 0; j < iterations; j++) {
 			iteration = j;
-			//System.out.println("Iteration" + j);
+			
+			System.out.println("\n\nIteration" + j);
+			//if(iteration % 100 == 0){
+				//averageDistance();
+			//}
 			averageDistance();
 		
 		// calculate the pBest and gBest positions
 			for (int i = 0; i < swarmSize; i++) {
-				Particle particle = swarm.get(i);				
+				Particle particle = swarm.get(i);
+				averageNeighbourhood[j]  += particle.neighbourhood.size();
+				
 				// pass the swarm to calculate the gBest
 				// particle
 				// and fitness
@@ -134,7 +141,7 @@ public abstract class PSO {
 				//calculateGBest();
 				// update fitness
 				// fitness = problem.getFitness(position);
-				swarmFitnesses[i] = particle.getFitness();
+				//swarmFitnesses[i] = particle.getFitness();
 
 			}
 			//System.out.println("DistancesMain: " + distances);
@@ -144,6 +151,9 @@ public abstract class PSO {
 				System.out.println("Distances getDistance()1 : " + particle.getDistance());
 			}*/	
 		averageFitnesses[j] += gBestFitness;
+		averageNeighbourhood[j] = averageNeighbourhood[j] / swarmSize;
+		//System.out.println("averageNeighbourhood = " + averageNeighbourhood[j]);
+		
 		//System.out.println("ITERATION " + iteration + ": ");
 		//System.out.println("     SwarmFitnesses: " + Arrays.toString(swarmFitnesses));
 		//System.out.println("     Particle: " + gBestParticle.particleNo + "\tGBestFitnessA: " + gBestParticle.getFitness());

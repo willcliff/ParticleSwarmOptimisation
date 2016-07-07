@@ -24,17 +24,20 @@ public class PSOMain {
 		int function = 1;
 		long startTime = new Date( ).getTime();
 		
-		for(int j = 1; j<=7; j++){
-			int numberOfRuns = 25;
+		for(int j = 1; j<=1; j++){
+			int numberOfRuns = 1;
 			double total = 0;
 			double finalAverage;
 			double standardDeviation = 0;
 			double[] avergaeBestFitness = new double[numberOfRuns];
-			double[] averageSwarmFitnesses = new double[10000];			
-			String dir;
-			String fileName = "DefaultFile";
+			double[] averageSwarmFitnesses = new double[10000];
+			double[] averageSwarmSize= new double[10000];	
+			String dir;			
 			String dir1;
+			String dir2;
+			String fileName = "DefaultFile";
 			String fileName1 = "DefaultFile";
+			String fileName2 = "DefaultFile";
 			for (int r = 0; r < numberOfRuns; r++) {
 
 				// GlobalPSO pso = new GlobalPSO();
@@ -58,17 +61,21 @@ public class PSOMain {
 				//pso1.execute();
 				for(int i = 0; i < pso.averageFitnesses.length; i++){
 					averageSwarmFitnesses[i] += pso.averageFitnesses[i];
+					averageSwarmSize[i] += pso.averageNeighbourhood[i];
 				}
 				System.out.println("     Average swarmValuesMAIN RUN: " + r + " "
-						+ Arrays.toString(averageSwarmFitnesses) + "\n");
+						+ Arrays.toString(averageSwarmFitnesses) + "\n");				
 				//BasicTestFunc problem1 = new BasicTestFunc(j);
 				//TestFunc14 problem1 = new TestFunc14(function);
 				//LocalPSO pso1 = new LocalPSO(problem1);
 				//pso1.execute();
 				
-				dir = "//fs2/14232817/Desktop/PSOResults/BasicFunctions";
+				dir = "//fs2/14232817/Desktop/PSOResults/GraphResults/";
 				//dir = "C:/Users/William/Documents/NUIG Masters/Year2/PSOResults/BasicFunctions";
-				fileName = dir + "//" + pso.psoType + problem.functionName + ".dat";
+				fileName = dir + pso.psoType +"//" + pso.psoType + problem.functionName + ".dat";
+				
+				dir2 = "//fs2/14232817/Desktop/PSOResults/GraphResults/";
+				fileName2 = dir2 + pso.psoType + "/SwarmSize/" + "//" + pso.psoType + problem.functionName + ".dat";
 				
 				dir1 = "//fs2/14232817/Desktop/PSOResults/SummaryResults";
 				//dir1 = "C:/Users/William/Documents/NUIG Masters/Year2/PSOResults/SummaryResults";
@@ -80,7 +87,9 @@ public class PSOMain {
 				avergaeBestFitness[r] = pso.gBestFitness;
 				total += avergaeBestFitness[r];
 				
-			}
+				
+				
+			}//end of runs
 			//standard deviation
 			
 			
@@ -89,6 +98,14 @@ public class PSOMain {
 			
 			System.out.println("     Average BestValuesMAIN: "
 					+ Arrays.toString(avergaeBestFitness));
+			for(int i = 0; i < averageSwarmSize.length; i++){
+				averageSwarmSize[i] = averageSwarmSize[i] / numberOfRuns;
+			}
+			
+
+			System.out.println("     averageSwarmSize: "
+					+ Arrays.toString(averageSwarmSize));
+			
 			
 			finalAverage = total / numberOfRuns;
 			double temp = 0;
@@ -98,6 +115,7 @@ public class PSOMain {
 				temp += (finalAverage - avergaeBestFitness[r]) * (finalAverage - avergaeBestFitness[r]);
 				
 			}
+			//variance = temp/(numberOfRuns-1)
 			standardDeviation = Math.sqrt((temp/(numberOfRuns-1)));
 			double standardDeviationPop;
 			standardDeviationPop = Math.sqrt(temp/numberOfRuns);
@@ -108,14 +126,23 @@ public class PSOMain {
 			System.out.println("Time Elapsed: " + difference);
 			
 			BufferedWriter output;
-			output = new BufferedWriter(new FileWriter(fileName));
+			/*output = new BufferedWriter(new FileWriter(fileName));
 			for (int i = 0; i < averageSwarmFitnesses.length; i++)
 	        {
 				averageSwarmFitnesses[i] = averageSwarmFitnesses[i] / numberOfRuns;           
 	            output.write(i+1 + "\t" + averageSwarmFitnesses[i] + "\n");         
 	        }
-			output.close();
-			BufferedWriter output1;
+			output.close();*/
+			
+			/*output = new BufferedWriter(new FileWriter(fileName2));
+			for (int i = 0; i < averageSwarmSize.length; i++)
+	        {
+				averageSwarmSize[i] = averageSwarmSize[i] / numberOfRuns;           
+	            output.write(i+1 + "\t" + averageSwarmSize[i] + "\n");         
+	        }
+			output.close();*/
+			
+			/*BufferedWriter output1;
 			output1 = new BufferedWriter(new FileWriter(fileName1));			
 			output1.write("Average Best Values: " + Arrays.toString(avergaeBestFitness));
 			output1.write("\n");
@@ -126,7 +153,8 @@ public class PSOMain {
 			output1.write("Final Average: " + finalAverage);
 			output1.write("\n");
 			output1.write("Time Elapsed: " + difference);
-			output1.close();			
+			output1.close();*/
+			
 		}
 		
 	}

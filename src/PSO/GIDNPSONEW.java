@@ -9,12 +9,15 @@ public class GIDNPSONEW extends PSO {
 	
 	 int b = 2;//initial number of neighbours
      double y = 2;//rate of population increase
-     double evoFactor;
+     private double evoFactor;
      String stateFactor;
+     double[] evoFacts = new double[10];
 	
 	public GIDNPSONEW(Problem problem){
 		super(problem);
-		psoType = "GIDNPSONEW";
+		//psoType = "GIDNPSONEW";
+		//psoType = "GIDNPSONEW10xIts";
+		psoType = "GIDNPSONEWTest";
 		System.out.println("Commencing PSO GIDNNEW!\n");
 		for(Particle particle : swarm){
 			particle.neighbourhoodNumber = 0;			
@@ -26,7 +29,7 @@ public class GIDNPSONEW extends PSO {
 			particle.notNeighbours = new ArrayList<Particle>(swarm);
 			
 			
-			//Alternative method with changeable b
+			/*//Alternative method with changeable b
 			particle.addNeighbour(particle);
 			particle.removeNotNeighbours(particle);
 			//System.out.println("notNeighbours:" + particle.notNeighbours.size());
@@ -40,8 +43,8 @@ public class GIDNPSONEW extends PSO {
 				particle.removeNotNeighbours(newParticle);
 			}
 			//System.out.println("notNeighboursNew:" + particle.notNeighbours.size());
-			
-			/*//GIDN Method
+			*/
+			//GIDN Method
 			//if i>0 leftNeighbour = i-1, if i=0 leftNeighbour = last particle
 			int indexLeftNeighbour = (i > 0) ? i - 1 : swarmSize - 1;
 			//if particle isn't last particle rightNeighbour = i+1, if i=last particle rightNeighbour = first particle
@@ -58,15 +61,18 @@ public class GIDNPSONEW extends PSO {
 			particle.removeNotNeighbours(leftNeighbour);
 			
 			particle.addNeighbour(rightNeighbour);
-			particle.removeNotNeighbours(rightNeighbour);*/
+			particle.removeNotNeighbours(rightNeighbour);
 		}	
 	}
 	
 	@Override
 	public double[] calculateNeighbourhoodBest(int i) {
 		Particle particle = swarm.get(i);
-		//System.out.println("Particle:" + particle.particleNo + "NeighbourhoodSize" + particle.neighbourhood.size());
-		//System.out.println("Particle:" + particle.particleNo + "NotNeighbourhoodSize" + particle.notNeighbours.size());
+		//System.out.println("Particle:" + particle.particleNo + "beforNeighbourhoodSize" + particle.neighbourhood.size());
+		//System.out.println("Particle:" + particle.particleNo + "beforeNotNeighbourhoodSize" + particle.notNeighbours.size());
+		//if(iteration % 100 == 0){
+			//updateNeighbourhoods(particle);
+		//}
 		updateNeighbourhoods(particle);
 		//System.out.println("Particle:" + particle.particleNo + "NeighbourhoodSize" + particle.neighbourhood.size());
 		//System.out.println("Particle:" + particle.particleNo + "NotNeighbourhoodSize" + particle.notNeighbours.size());		
@@ -120,30 +126,56 @@ public class GIDNPSONEW extends PSO {
 			
 			//Particle particle  = swarm.get(i);
 			double previousH = particle.neighbourhoodNumber;
+			double h;
 			//averageDistance(i);
 			//double h = (((iteration + 1.0) / iterations) * ((iteration + 1.0) / iterations)) * swarmSize + b;
-			//System.out.println("previoush = " + previousH);
+			////System.out.println("previoush = " + previousH);
+			//System.out.println("evoFactor = " + evoFactor);
+			
 			//double h = Math.pow(((iteration + 1.0) / iterations), y) * swarmSize + b;
-			//double h = Math.pow((1/evoFactor), y) * swarmSize + b;
-			//double h = Math.pow((evoFactor), y) * swarmSize + b;
-			double h = (1/evoFactor) * swarmSize + b;
-			//System.out.println("h = " + h);
+		/*if (evoFactor == 0) {
+			h = previousH + b;
+			particle.neighbourhoodNumber = h;
+			System.out.println("h = " + h);
+			int numberOfNeighbours = (int) (h - previousH);
+			for (int j = 0; j < numberOfNeighbours; j++) {
+				if (particle.notNeighbours.size() == 0)
+					break;
+
+				// add new random neighbour
+				int neighbour = (int) (random.nextDouble() * particle.notNeighbours.size());
+				// System.out.println("AddNotNeighbourNo: " + neighbour);
+				particle.addNeighbour(particle.notNeighbours.get(neighbour));
+				particle.removeNotNeighbours(particle.notNeighbours.get(neighbour));
+			}
+		}
+		else{*/
+			//h = Math.pow(((iteration + 1.0) / iterations), y) * swarmSize + b;
+			h = Math.pow((1/evoFactor), y) * swarmSize + b;
+			
+			//h = Math.pow((evoFactor), y) * swarmSize + b;
+			//h = (1 / evoFactor) * swarmSize + b;
+			////System.out.println("h = " + h);
+
 			h = Math.floor(h);
 			particle.neighbourhoodNumber = h;
-			if(h > previousH){
+			if (h > previousH) {
 				int numberOfNeighbours = (int) (h - previousH);
-				
-				for(int j = 0; j < numberOfNeighbours; j++){
+				// System.out.println("Particle:" + particle.particleNo +
+				// "NumOfNeighboursToAdd" + numberOfNeighbours);
+
+				for (int j = 0; j < numberOfNeighbours; j++) {
 					if (particle.notNeighbours.size() == 0)
-                        break;
-					
-                    //add new random neighbour
-                    int neighbour = (int) (random.nextDouble() * particle.notNeighbours.size());
-                    //System.out.println("AddNotNeighbourNo: " + neighbour);
-                    particle.addNeighbour(particle.notNeighbours.get(neighbour));
-                    particle.removeNotNeighbours(particle.notNeighbours.get(neighbour));
+						break;
+
+					// add new random neighbour
+					int neighbour = (int) (random.nextDouble() * particle.notNeighbours.size());
+					// System.out.println("AddNotNeighbourNo: " + neighbour);
+					particle.addNeighbour(particle.notNeighbours.get(neighbour));
+					particle.removeNotNeighbours(particle.notNeighbours.get(neighbour));
 				}
-			}						
+			}
+		//}
 		//}				
 	}
 	
@@ -192,8 +224,7 @@ public class GIDNPSONEW extends PSO {
 		evoFactor = ((gBestDistance - minDistance)/(maxDistance - minDistance));
 		//evoFactor = ((maxDistance - gBestDistance)/(maxDistance - minDistance));
 		
-		//System.out.println("DistancesEvo: " + distances);
-		//System.out.println("Evo Factor: " + evoFactor + "\n");
+		System.out.println("Evo Factor: " + evoFactor + "\n");
 		evoDecision(evoFactor);
 		return evoFactor;
 	}
