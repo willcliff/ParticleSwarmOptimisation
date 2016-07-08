@@ -23,15 +23,18 @@ public class PSOMain {
 	public static void begin() throws Exception {
 		int function = 1;
 		long startTime = new Date( ).getTime();
+		String psoType = "Default";
+		String parameters = "Default";
 		
-		for(int j = 1; j<=1; j++){
-			int numberOfRuns = 1;
+		for(int j = 1; j<=7; j++){
+			int numberOfRuns = 25;
+			int iterations;
 			double total = 0;
 			double finalAverage;
 			double standardDeviation = 0;
 			double[] avergaeBestFitness = new double[numberOfRuns];
 			double[] averageSwarmFitnesses = new double[10000];
-			double[] averageSwarmSize= new double[10000];	
+			double[] averageSwarmSize = new double[10000];	
 			String dir;			
 			String dir1;
 			String dir2;
@@ -52,24 +55,26 @@ public class PSOMain {
 				//GlobalPSO pso = new GlobalPSO(problem);
 				//VonNeumann pso = new VonNeumann(problem);
 				//GIDNPSO pso = new GIDNPSO(problem);
-				GIDNPSONEW pso = new GIDNPSONEW(problem);
+				//GIDNPSONEW pso = new GIDNPSONEW(problem);
+				GIDNPSONEW2 pso = new GIDNPSONEW2(problem);
 				pso.execute();
-				
 				//BasicTestFunc problem1 = new BasicTestFunc(j);
 				//TestFunc14 problem1 = new TestFunc14(function);
 				//LocalPSO pso1 = new LocalPSO(problem1);
 				//pso1.execute();
+				
+				
 				for(int i = 0; i < pso.averageFitnesses.length; i++){
 					averageSwarmFitnesses[i] += pso.averageFitnesses[i];
-					averageSwarmSize[i] += pso.averageNeighbourhood[i];
+					averageSwarmSize[i] += pso.averageNeighbSize[i];
 				}
-				System.out.println("     Average swarmValuesMAIN RUN: " + r + " "
-						+ Arrays.toString(averageSwarmFitnesses) + "\n");				
+				//System.out.println("     Average swarmValuesMAIN RUN: " + r + " "	+ Arrays.toString(averageSwarmFitnesses) + "\n");				
 				//BasicTestFunc problem1 = new BasicTestFunc(j);
 				//TestFunc14 problem1 = new TestFunc14(function);
 				//LocalPSO pso1 = new LocalPSO(problem1);
 				//pso1.execute();
-				
+				psoType = pso.psoType;
+				parameters = pso.parameters;
 				dir = "//fs2/14232817/Desktop/PSOResults/GraphResults/";
 				//dir = "C:/Users/William/Documents/NUIG Masters/Year2/PSOResults/BasicFunctions";
 				fileName = dir + pso.psoType +"//" + pso.psoType + problem.functionName + ".dat";
@@ -99,7 +104,7 @@ public class PSOMain {
 			System.out.println("     Average BestValuesMAIN: "
 					+ Arrays.toString(avergaeBestFitness));
 			for(int i = 0; i < averageSwarmSize.length; i++){
-				averageSwarmSize[i] = averageSwarmSize[i] / numberOfRuns;
+				averageSwarmSize[i] = (int) averageSwarmSize[i] / numberOfRuns;
 			}
 			
 
@@ -125,8 +130,8 @@ public class PSOMain {
 			System.out.println("\n");
 			System.out.println("Time Elapsed: " + difference);
 			
-			BufferedWriter output;
-			/*output = new BufferedWriter(new FileWriter(fileName));
+			/*BufferedWriter output;
+			output = new BufferedWriter(new FileWriter(fileName));
 			for (int i = 0; i < averageSwarmFitnesses.length; i++)
 	        {
 				averageSwarmFitnesses[i] = averageSwarmFitnesses[i] / numberOfRuns;           
@@ -137,13 +142,17 @@ public class PSOMain {
 			/*output = new BufferedWriter(new FileWriter(fileName2));
 			for (int i = 0; i < averageSwarmSize.length; i++)
 	        {
-				averageSwarmSize[i] = averageSwarmSize[i] / numberOfRuns;           
+				//averageSwarmSize[i] = averageSwarmSize[i] / numberOfRuns;           
 	            output.write(i+1 + "\t" + averageSwarmSize[i] + "\n");         
 	        }
 			output.close();*/
 			
-			/*BufferedWriter output1;
-			output1 = new BufferedWriter(new FileWriter(fileName1));			
+			BufferedWriter output1;
+			output1 = new BufferedWriter(new FileWriter(fileName1));
+			output1.write("PSOType: " + psoType);
+			output1.write("\n");
+			output1.write("Parameters: " + psoType);
+			output1.write("\n");
 			output1.write("Average Best Values: " + Arrays.toString(avergaeBestFitness));
 			output1.write("\n");
 			output1.write("Standard Deviation: " + standardDeviation);
@@ -153,7 +162,7 @@ public class PSOMain {
 			output1.write("Final Average: " + finalAverage);
 			output1.write("\n");
 			output1.write("Time Elapsed: " + difference);
-			output1.close();*/
+			output1.close();
 			
 		}
 		

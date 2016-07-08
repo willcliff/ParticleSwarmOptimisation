@@ -18,12 +18,12 @@ import java.text.*;
 public abstract class PSO {
 	Problem problem;
 	//int function = 1;
-	public int iterations = 10000;
+	int iterations = 10000;
 	int swarmSize = 50;
 	int iteration;
 	//int numberOfRuns = 1;
 	double[] averageFitnesses = new double[iterations];
-	double[] averageNeighbourhood = new double[iterations];
+	double[] averageNeighbSize = new double[iterations];
 	// stores gBestFitness after each iteration
 	Date dateTime = new Date();
 	SimpleDateFormat ft = new SimpleDateFormat ("E yyyy-MM-dd'at'hhmmss a zzz");
@@ -85,16 +85,24 @@ public abstract class PSO {
 		for (int j = 0; j < iterations; j++) {
 			iteration = j;
 			
-			System.out.println("\n\nIteration" + j);
+			//System.out.println("\n\nIteration" + j);
 			//if(iteration % 100 == 0){
 				//averageDistance();
 			//}
 			averageDistance();
-		
+			/*for (Particle particle : swarm){
+				//System.out.println("Distances getDistance()1 : " + particle.getDistance());
+				System.out.println("BeforeParticle:" + particle.particleNo + "Beforefitness" + particle.getFitness());
+				for (Particle neighbour : particle.neighbourhood){
+					System.out.print("BeforeParticleNum(Neighbourhood): " + neighbour.particleNo + " BeforeNeighbourhoodFitnesses" + neighbour.getFitness() + "\n"
+							+ "BeforeParticleNum(Particle): " + swarm.get(neighbour.particleNo-1).particleNo  + "BeforeNeighbourhoodFitnesses" + swarm.get(neighbour.particleNo-1).getFitness());
+				}
+				System.out.println("\n");
+			}*/
 		// calculate the pBest and gBest positions
 			for (int i = 0; i < swarmSize; i++) {
 				Particle particle = swarm.get(i);
-				averageNeighbourhood[j]  += particle.neighbourhood.size();
+				averageNeighbSize[j]  += particle.neighbourhood.size();
 				
 				// pass the swarm to calculate the gBest
 				// particle
@@ -148,13 +156,30 @@ public abstract class PSO {
 			//evoFactor(distances);
 			
 			/*for (Particle particle : swarm){
-				System.out.println("Distances getDistance()1 : " + particle.getDistance());
-			}*/	
+				//System.out.println("Distances getDistance()1 : " + particle.getDistance());
+				System.out.println("Particle:" + particle.particleNo + "fitness" + particle.getFitness());
+				for (Particle neighbour : particle.neighbourhood){
+					System.out.print("ParticleNum(Neighbourhood): " + neighbour.particleNo + " neighbourhoodFitnesses" + neighbour.getFitness() + "\n"
+							+ "ParticleNum(Particle): " + swarm.get(neighbour.particleNo-1).particleNo + " neighbourhoodFitnesses" + swarm.get(neighbour.particleNo-1).getFitness());
+				}
+				System.out.println("\n");
+			}*/
 		averageFitnesses[j] += gBestFitness;
-		averageNeighbourhood[j] = averageNeighbourhood[j] / swarmSize;
-		//System.out.println("averageNeighbourhood = " + averageNeighbourhood[j]);
+		averageNeighbSize[j] = averageNeighbSize[j] / swarmSize;
 		
-		//System.out.println("ITERATION " + iteration + ": ");
+		
+		/*System.out.println("ITERATION " + iteration + ": ");
+		for (int i=0;i<swarm.size();i++){
+			System.out.println("     Particle: " + swarm.get(i).particleNo + "\tFitness: " + swarm.get(i).getFitness());
+		}
+		
+		for (Particle neighbour : swarm.get(0).neighbourhood){
+			System.out.println("     Particle: " + swarm.get(0).particleNo + "\tNeighbour: " + neighbour.particleNo + "\tFitness: " + neighbour.getFitness());
+		}
+		
+		for (Particle neighbour : swarm.get(6).neighbourhood){
+			System.out.println("     Particle: " + swarm.get(6).particleNo + "\tNeighbour: " + neighbour.particleNo + "\tFitness: " + neighbour.getFitness());
+		}*/
 		//System.out.println("     SwarmFitnesses: " + Arrays.toString(swarmFitnesses));
 		//System.out.println("     Particle: " + gBestParticle.particleNo + "\tGBestFitnessA: " + gBestParticle.getFitness());
 		//System.out.println("     Particle: " + gBestParticle.particleNo + "\tDistance: " + gBestParticle.getDistance());
@@ -173,8 +198,10 @@ public abstract class PSO {
 		// System.out.println("     Value: " +
 		// problem.getFitness(gBestParticle.position));
 		// ystem.out.println("     Value: " + gBestParticle.getFitness());
-
+		
 		}
+		//System.out.println("     SwarmSizes: " + Arrays.toString(averageNeighbSize));
+		
 		/*try {
 			createAvSummary(averageFitnesses, date, numberOfRuns);
 		} catch (IOException e) {

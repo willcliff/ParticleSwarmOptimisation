@@ -88,11 +88,13 @@ public class Particle implements Comparable<Particle> {
 	public void update(double[] lBest) {
 		Random rand1 = new Random();
 		Random rand2 = new Random();
+		
 		//System.out.println("Particle Number: " + particleNo + "Velocity Before: " + Arrays.toString(velocity));
 		//System.out.println("Particle Number: " + particleNo + "Position Before: " + Arrays.toString(getPosition()));
 		double r1 = rand1.nextDouble();
 		double r2 = rand2.nextDouble();
-		for (int i = 0; i < dimensions; i++) {			
+		for (int i = 0; i < dimensions; i++) {
+			
 			
 			newVelocity = (X*(velocity[i]
 					//local best component
@@ -116,7 +118,10 @@ public class Particle implements Comparable<Particle> {
 		//position = location;
 		for (int i = 0; i < dimensions; i++) {
 			position[i] += velocity[i];
-
+			/*if(position[i] < minPos || position[i] > maxPos){
+				double randomPosition = (minPos + ((maxPos - minPos) * rand1.nextDouble()));
+				position[i] = randomPosition;
+			}*/
 			// make sure particle is still in boundaries
 			/*if (position[i] < minPosition[i]) {
 				position[i] = minPosition[i];
@@ -130,6 +135,7 @@ public class Particle implements Comparable<Particle> {
 			if(position[i] < minPos || position[i] > maxPos){
 				calcFitness = false;
 			}
+			
 		}
 		//System.out.println("Particle Number: " + particleNo + "New Velocity: " + newVelocity);
 		//System.out.println("Particle Number: " + particleNo + "Velocity After: " + Arrays.toString(velocity));
