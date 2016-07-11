@@ -11,13 +11,14 @@ public class GIDNPSONEW extends PSO {
      double y = 2;//rate of population increase
      //protected double evoFactor;
      String stateFactor;
-     //String parameters = "b = " + b + "\ty = " + y + "\th = Math.pow((1/evoFactor), y) * swarmSize + b";
+     String parameters = "b = " + b + "\ty = " + y + "\th = (1 - evoFactor) * Math.pow(((iteration + 1.0) / iterations), y) * swarmSize + b";
      //double[] evoFacts = new double[10];
 	
 	public GIDNPSONEW(Problem problem){
 		super(problem);
 		//psoType = "GIDNPSO";
-		psoType = "GIDNPSONEW";
+		psoType = "GIDNPSONEWv8";
+		//psoType = "GIDNPSONEWv9";
 		//psoType = "GIDNPSONEW2";
 		//psoType = "GIDNPSONEW10xIts";
 		//psoType = "GIDNPSONEWTest";
@@ -156,12 +157,13 @@ public class GIDNPSONEW extends PSO {
 		}
 		else{*/
 			//h = Math.pow(((iteration + 1.0) / iterations), y) * swarmSize + b;
-			h = Math.pow((1/evoFactor), y) * swarmSize + b; //v1
+			//h = Math.pow((1/evoFactor), y) * swarmSize + b; //v4
 			////h = (1 - evoFactor) * swarmSize + b;
-			//h = (1 - evoFactor) * Math.pow(((iteration + 1.0) / iterations), y) * swarmSize + b;
+			h = (1 - evoFactor) * Math.pow(((iteration + 1.0) / iterations), y) * swarmSize + b; //v8
+			//h = (evoFactor) * Math.pow(((iteration + 1.0) / iterations), y) * swarmSize + b; //v9
 			//h = (1 - evoFactor) * particle.neighbourhood.size() + b;
-			//h = Math.pow((evoFactor), y) * swarmSize + b;
-			//h = (1 / evoFactor) * swarmSize + b;
+			////h = Math.pow((1-evoFactor), y) * swarmSize + b;
+			//h = (1 / evoFactor) * swarmSize + b; //v1
 			
 
 			h = Math.floor(h);
@@ -239,12 +241,12 @@ public class GIDNPSONEW extends PSO {
 		
 		if(evoFactor > .6 && evoFactor <= .9){
 			stateFactor = "Exploration";
-			y = 2;
+			y = 4;
 		}
 		
 		else if(evoFactor > .3 && evoFactor <= .6){
 			stateFactor = "Exploitation";
-			y = 2;
+			y = 3;
 		}
 		
 		else if(evoFactor >= 0 && evoFactor <= .3){
@@ -253,7 +255,7 @@ public class GIDNPSONEW extends PSO {
 		}
 		else if(evoFactor > .9 && evoFactor <= 1){
 			stateFactor = "Jump Out";
-			y = 2;
+			y = 4;
 		}				
 	}
 

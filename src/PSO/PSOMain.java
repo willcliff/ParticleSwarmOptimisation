@@ -76,7 +76,7 @@ public class PSOMain {
 				//LocalPSO pso1 = new LocalPSO(problem1);
 				//pso1.execute();
 				psoType = pso.psoType;
-				//parameters = pso.parameters;
+				parameters = pso.parameters;
 				dir = "//fs2/14232817/Desktop/PSOResults/GraphResults/";
 				//dir = "C:/Users/William/Documents/NUIG Masters/Year2/PSOResults/BasicFunctions";
 				fileName = dir + pso.psoType +"//" + pso.psoType + problem.functionName + ".dat";
