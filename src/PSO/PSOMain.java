@@ -42,6 +42,7 @@ public class PSOMain {
 			String fileName = "DefaultFile";
 			String fileName1 = "DefaultFile";
 			String fileName2 = "DefaultFile";
+			String fileName3 = "DefaultFile";
 			for (int r = 0; r < numberOfRuns; r++) {
 
 				// GlobalPSO pso = new GlobalPSO();
@@ -85,7 +86,7 @@ public class PSOMain {
 				fileName2 = dir2 + pso.psoType + "//" + pso.psoType + problem.functionName + "SwarmSize.dat";
 				
 				dir2 = "//fs2/14232817/Desktop/PSOResults/GraphResults/";
-				fileName2 = dir2 + pso.psoType + "//" + pso.psoType + problem.functionName + "EvoFacts.dat";
+				fileName3 = dir2 + pso.psoType + "//" + pso.psoType + problem.functionName + "EvoFacts.dat";
 				
 				dir1 = "//fs2/14232817/Desktop/PSOResults/SummaryResults";
 				//dir1 = "C:/Users/William/Documents/NUIG Masters/Year2/PSOResults/SummaryResults";
@@ -114,10 +115,10 @@ public class PSOMain {
 			}
 			
 
-			System.out.println("     averageSwarmSize: "
+			/*System.out.println("     averageSwarmSize: "
 					+ Arrays.toString(averageSwarmSize));
 			System.out.println("     averageEvoFactor: "
-					+ Arrays.toString(evoFacts));
+					+ Arrays.toString(evoFacts));*/
 			
 			finalAverage = total / numberOfRuns;
 			double temp = 0;
@@ -154,7 +155,7 @@ public class PSOMain {
 	        }
 			output.close();
 			
-			output = new BufferedWriter(new FileWriter(fileName2));
+			output = new BufferedWriter(new FileWriter(fileName3));
 			for (int i = 0; i < evoFacts.length; i++)
 	        {
 				//averageSwarmSize[i] = averageSwarmSize[i] / numberOfRuns;           
