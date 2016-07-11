@@ -76,7 +76,7 @@ public class GIDNPSO extends PSO {
 			if (neighbour.getPBestFitness() < nBestFitness) {
 				nBest = neighbour.getPBest().clone();
 				//neighbour.nBest = neighbour.getPosition().clone();
-				nBestFitness = neighbour.getFitness();				
+				nBestFitness = neighbour.getPBestFitness();				
 			}
 		}
 		return nBest;

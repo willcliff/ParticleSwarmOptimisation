@@ -9,19 +9,20 @@ public class GIDNPSONEW extends PSO {
 	
 	 int b = 2;//initial number of neighbours
      double y = 2;//rate of population increase
-     private double evoFactor;
+     //protected double evoFactor;
      String stateFactor;
-     String parameters = "b = " + b + "\ty = " + y + "\th = Math.pow((1/evoFactor), y) * swarmSize + b";
-     double[] evoFacts = new double[10];
+     //String parameters = "b = " + b + "\ty = " + y + "\th = Math.pow((1/evoFactor), y) * swarmSize + b";
+     //double[] evoFacts = new double[10];
 	
 	public GIDNPSONEW(Problem problem){
 		super(problem);
-		//psoType = "GIDNPSONEW";
+		//psoType = "GIDNPSO";
+		psoType = "GIDNPSONEW";
 		//psoType = "GIDNPSONEW2";
 		//psoType = "GIDNPSONEW10xIts";
 		//psoType = "GIDNPSONEWTest";
 		//psoType = "Test";
-		psoType = "Test2";
+		//psoType = "Test2";
 		System.out.println("Commencing PSO GIDNNEW!\n");
 		for(Particle particle : swarm){
 			particle.neighbourhoodNumber = 0;			
@@ -86,7 +87,7 @@ public class GIDNPSONEW extends PSO {
 			if (neighbour.getPBestFitness() < nBestFitness) {
 				nBest = neighbour.getPBest().clone();
 				//neighbour.nBest = neighbour.getPosition().clone();
-				nBestFitness = neighbour.getFitness();				
+				nBestFitness = neighbour.getPBestFitness();				
 			}
 		}
 		return nBest;
@@ -155,9 +156,9 @@ public class GIDNPSONEW extends PSO {
 		}
 		else{*/
 			//h = Math.pow(((iteration + 1.0) / iterations), y) * swarmSize + b;
-			h = Math.pow((1/evoFactor), y) * swarmSize + b;
+			h = Math.pow((1/evoFactor), y) * swarmSize + b; //v1
 			////h = (1 - evoFactor) * swarmSize + b;
-			////h = (1 - evoFactor) * Math.pow(((iteration + 1.0) / iterations), y) * swarmSize + b;
+			//h = (1 - evoFactor) * Math.pow(((iteration + 1.0) / iterations), y) * swarmSize + b;
 			//h = (1 - evoFactor) * particle.neighbourhood.size() + b;
 			//h = Math.pow((evoFactor), y) * swarmSize + b;
 			//h = (1 / evoFactor) * swarmSize + b;

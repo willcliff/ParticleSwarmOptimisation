@@ -24,6 +24,8 @@ public abstract class PSO {
 	//int numberOfRuns = 1;
 	double[] averageFitnesses = new double[iterations];
 	double[] averageNeighbSize = new double[iterations];
+	double[] evoFacts = new double[iterations];
+	double evoFactor;
 	// stores gBestFitness after each iteration
 	Date dateTime = new Date();
 	SimpleDateFormat ft = new SimpleDateFormat ("E yyyy-MM-dd'at'hhmmss a zzz");
@@ -37,7 +39,7 @@ public abstract class PSO {
 	double[] gBest;
 	Particle gBestParticle;// globally(swarms) best position
 	protected String psoType = "Standard";	 // int dimensions = problem.getDimensions();
-	int dimensions; 
+	int dimensions;	
 	double standardDeviation;	
 	 // globally best particle
 	
@@ -90,6 +92,7 @@ public abstract class PSO {
 				//averageDistance();
 			//}
 			averageDistance();
+			evoFacts[j] = evoFactor;
 			/*for (Particle particle : swarm){
 				//System.out.println("Distances getDistance()1 : " + particle.getDistance());
 				System.out.println("BeforeParticle:" + particle.particleNo + "Beforefitness" + particle.getFitness());
@@ -140,10 +143,10 @@ public abstract class PSO {
 				//change particle to double and return nBest!
 				//Particle bestNeighbour = calculateNeighbourhoodBest(i);
 				//particle.update(bestNeighbour.getPBest());
-				double[] lBest = calculateNeighbourhoodBest(i).clone();
+				double[] nBest = calculateNeighbourhoodBest(i).clone();
 				
-				particle.update(lBest);
-				
+				//particle.update(lBest);
+				particle.update(nBest, gBest, evoFactor);
 				// step 4 update the position
 				// particle.updatePosition();
 				//calculateGBest();
@@ -250,6 +253,7 @@ public abstract class PSO {
 			//calculateGBest();
 			System.out.println("     gBestParticle Fitness: " + (gBestParticle.getPBestFitness()));
 			System.out.println("     gBestFitness: " + gBestFitness + "\n");
+			System.out.println("     evoFacts: " + Arrays.toString(evoFacts));
 			//System.out.println("\n");
 			
 			

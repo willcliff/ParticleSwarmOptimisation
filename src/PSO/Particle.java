@@ -85,14 +85,17 @@ public class Particle implements Comparable<Particle> {
 	}
 
 	// finish updating velocity and update position
-	public void update(double[] lBest) {
+	//public void update(double[] lBest) {
+	public void update(double[] nBest, double[] gBest, double evoFactor) {	
 		Random rand1 = new Random();
+		
 		Random rand2 = new Random();
 		
 		//System.out.println("Particle Number: " + particleNo + "Velocity Before: " + Arrays.toString(velocity));
 		//System.out.println("Particle Number: " + particleNo + "Position Before: " + Arrays.toString(getPosition()));
 		double r1 = rand1.nextDouble();
 		double r2 = rand2.nextDouble();
+		double r3 = rand2.nextDouble();
 		for (int i = 0; i < dimensions; i++) {
 			
 			
@@ -100,7 +103,27 @@ public class Particle implements Comparable<Particle> {
 					//local best component
 					+ (c1 * rand1.nextDouble() * (pBest[i] - position[i]))
 					//global best component
-					+ (c2 * rand2.nextDouble() * (lBest[i] - position[i]))));
+					+ (c2 * rand2.nextDouble() * (nBest[i] - position[i]))));
+			
+			/*c1 = 4.1 * (evoFactor);
+			double remainder = 4.1 - c1;
+			c2 = evoFactor * remainder;
+			double c3 = (1 - evoFactor) * remainder;
+			newVelocity = (X*(velocity[i]
+					//local best component
+					+ (c1 * rand1.nextDouble() * (pBest[i] - position[i]))
+					//global best component
+					+ (c2*(1-evoFactor) * rand2.nextDouble() * (gBest[i] - position[i]))
+					
+					+ (c2*(evoFactor) * rand2.nextDouble() * (nBest[i] - position[i]))));*/
+			
+			/*newVelocity = (X*(velocity[i]
+					//local best component
+					+ (c1 * rand1.nextDouble() * (pBest[i] - position[i]))
+					//global best component
+					+ (c2 * rand2.nextDouble() * (gBest[i] - position[i]))
+					
+					+ (c3 * rand2.nextDouble() * (nBest[i] - position[i]))));*/
 			//newVelocity = X *( velocity[i] + c1 * rand1 * (pBest[i] - position[i]) + c2 * rand2 * (gBest[i] - position[i]));
 			if (newVelocity < minVelocity) 
 				velocity[i] = minVelocity;			
@@ -119,8 +142,9 @@ public class Particle implements Comparable<Particle> {
 		for (int i = 0; i < dimensions; i++) {
 			position[i] += velocity[i];
 			/*if(position[i] < minPos || position[i] > maxPos){
-				double randomPosition = (minPos + ((maxPos - minPos) * rand1.nextDouble()));
-				position[i] = randomPosition;
+				//double randomPosition = (minPos + ((maxPos - minPos) * rand1.nextDouble()));
+				//position[i] = randomPosition;
+				position[i] -= velocity[i];
 			}*/
 			// make sure particle is still in boundaries
 			/*if (position[i] < minPosition[i]) {

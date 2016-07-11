@@ -9,10 +9,10 @@ public class GIDNPSONEW2 extends PSO {
 	
 	 int b = 2;//initial number of neighbours
      double y = 2;//rate of population increase
-     private double evoFactor;
+     
      String parameters = "b = " + b + "\ty = " + y + "\th = (1 - evoFactor) * ((iteration + 1.0) / iterations) * swarmSize + b";
      String stateFactor;
-     double[] evoFacts = new double[10];
+     
 	
 	public GIDNPSONEW2(Problem problem){
 		super(problem);
@@ -21,7 +21,7 @@ public class GIDNPSONEW2 extends PSO {
 		//psoType = "GIDNPSONEW10xIts";
 		//psoType = "GIDNPSONEWTest";
 		//psoType = "Test";
-		psoType = "TEST";
+		psoType = "GIDNPSONEWv8withEvoFactsTestevo";
 		System.out.println("Commencing PSO GIDNNEW!\n");
 		for(Particle particle : swarm){
 			particle.neighbourhoodNumber = 0;			
@@ -155,14 +155,15 @@ public class GIDNPSONEW2 extends PSO {
 		}
 		else{*/
 			//h = Math.pow(((iteration + 1.0) / iterations), y) * swarmSize + b;
+			//h = Math.pow(((iteration + 1.0) / iterations), (y + evoFactor)) * swarmSize + b; //v9Test
 			//h = Math.pow((1/evoFactor), y) * swarmSize + b;
 			////h = (1 - evoFactor) * swarmSize + b;
 			////h = Math.pow((1-evoFactor), y) * swarmSize + b;
-			h = (1 - evoFactor) * ((iteration + 1.0) / iterations) * swarmSize + b;
+			h = (1 - evoFactor) * ((iteration + 1.0) / iterations) * swarmSize + b; //v8
 			//h = (1 - evoFactor) * Math.pow(((iteration + 1.0) / iterations), y) * swarmSize + b;
 			//h = (1 - evoFactor) * particle.neighbourhood.size() + b;
-			//h = Math.pow((evoFactor), y) * swarmSize + b;
-			//h = (1 / evoFactor) * swarmSize + b;
+			//h = Math.pow((evoFactor), y) * swarmSize + b; doesn't work as adds too many too soon
+			//h = (1 / evoFactor) * swarmSize + b; doesn't work unless != 0 and adds too many too soon
 			
 
 			h = Math.floor(h);
@@ -249,8 +250,12 @@ public class GIDNPSONEW2 extends PSO {
 		}
 		
 		else if(evoFactor >= 0 && evoFactor <= .3){
-			stateFactor = "Convergence";
 			y = 2;
+			/*if (evoFactor == 0){
+				this.evoFactor = .1 * y;
+			}*/
+			stateFactor = "Convergence";
+			
 		}
 		else if(evoFactor > .9 && evoFactor <= 1){
 			stateFactor = "Jump Out";

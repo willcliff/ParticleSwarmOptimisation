@@ -34,7 +34,8 @@ public class PSOMain {
 			double standardDeviation = 0;
 			double[] avergaeBestFitness = new double[numberOfRuns];
 			double[] averageSwarmFitnesses = new double[10000];
-			double[] averageSwarmSize = new double[10000];	
+			double[] averageSwarmSize = new double[10000];
+			double[] evoFacts = new double[10000];
 			String dir;			
 			String dir1;
 			String dir2;
@@ -55,8 +56,8 @@ public class PSOMain {
 				//GlobalPSO pso = new GlobalPSO(problem);
 				//VonNeumann pso = new VonNeumann(problem);
 				//GIDNPSO pso = new GIDNPSO(problem);
-				//GIDNPSONEW pso = new GIDNPSONEW(problem);
-				GIDNPSONEW2 pso = new GIDNPSONEW2(problem);
+				GIDNPSONEW pso = new GIDNPSONEW(problem);
+				//GIDNPSONEW2 pso = new GIDNPSONEW2(problem);
 				pso.execute();
 				//BasicTestFunc problem1 = new BasicTestFunc(j);
 				//TestFunc14 problem1 = new TestFunc14(function);
@@ -67,6 +68,7 @@ public class PSOMain {
 				for(int i = 0; i < pso.averageFitnesses.length; i++){
 					averageSwarmFitnesses[i] += pso.averageFitnesses[i];
 					averageSwarmSize[i] += pso.averageNeighbSize[i];
+					evoFacts[i] += pso.evoFacts[i];
 				}
 				//System.out.println("     Average swarmValuesMAIN RUN: " + r + " "	+ Arrays.toString(averageSwarmFitnesses) + "\n");				
 				//BasicTestFunc problem1 = new BasicTestFunc(j);
@@ -74,13 +76,16 @@ public class PSOMain {
 				//LocalPSO pso1 = new LocalPSO(problem1);
 				//pso1.execute();
 				psoType = pso.psoType;
-				parameters = pso.parameters;
+				//parameters = pso.parameters;
 				dir = "//fs2/14232817/Desktop/PSOResults/GraphResults/";
 				//dir = "C:/Users/William/Documents/NUIG Masters/Year2/PSOResults/BasicFunctions";
 				fileName = dir + pso.psoType +"//" + pso.psoType + problem.functionName + ".dat";
 				
 				dir2 = "//fs2/14232817/Desktop/PSOResults/GraphResults/";
 				fileName2 = dir2 + pso.psoType + "/SwarmSize/" + "//" + pso.psoType + problem.functionName + ".dat";
+				
+				dir2 = "//fs2/14232817/Desktop/PSOResults/GraphResults/";
+				fileName2 = dir2 + pso.psoType + "//" + pso.psoType + problem.functionName + "evoFacts.dat";
 				
 				dir1 = "//fs2/14232817/Desktop/PSOResults/SummaryResults";
 				//dir1 = "C:/Users/William/Documents/NUIG Masters/Year2/PSOResults/SummaryResults";
@@ -105,12 +110,14 @@ public class PSOMain {
 					+ Arrays.toString(avergaeBestFitness));
 			for(int i = 0; i < averageSwarmSize.length; i++){
 				averageSwarmSize[i] = (int) averageSwarmSize[i] / numberOfRuns;
+				evoFacts[i] = evoFacts[i] / numberOfRuns;
 			}
 			
 
 			System.out.println("     averageSwarmSize: "
 					+ Arrays.toString(averageSwarmSize));
-			
+			System.out.println("     averageEvoFactor: "
+					+ Arrays.toString(evoFacts));
 			
 			finalAverage = total / numberOfRuns;
 			double temp = 0;
@@ -137,13 +144,21 @@ public class PSOMain {
 				averageSwarmFitnesses[i] = averageSwarmFitnesses[i] / numberOfRuns;           
 	            output.write(i+1 + "\t" + averageSwarmFitnesses[i] + "\n");         
 	        }
-			output.close();*/
+			output.close();
 			
-			/*output = new BufferedWriter(new FileWriter(fileName2));
+			output = new BufferedWriter(new FileWriter(fileName2));
 			for (int i = 0; i < averageSwarmSize.length; i++)
 	        {
 				//averageSwarmSize[i] = averageSwarmSize[i] / numberOfRuns;           
 	            output.write(i+1 + "\t" + averageSwarmSize[i] + "\n");         
+	        }
+			output.close();
+			
+			output = new BufferedWriter(new FileWriter(fileName2));
+			for (int i = 0; i < evoFacts.length; i++)
+	        {
+				//averageSwarmSize[i] = averageSwarmSize[i] / numberOfRuns;           
+	            output.write(i+1 + "\t" + evoFacts[i] + "\n");         
 	        }
 			output.close();*/
 			
@@ -151,9 +166,13 @@ public class PSOMain {
 			output1 = new BufferedWriter(new FileWriter(fileName1));
 			output1.write("PSOType: " + psoType);
 			output1.write("\n");
-			output1.write("Parameters: " + psoType);
+			output1.write("Parameters: " + parameters);
 			output1.write("\n");
 			output1.write("Average Best Values: " + Arrays.toString(avergaeBestFitness));
+			output1.write("\n");
+			output1.write("Average Swarm Sizes: " + Arrays.toString(averageSwarmSize));
+			output1.write("\n");
+			output1.write("Average Evo Factors: " + Arrays.toString(evoFacts));
 			output1.write("\n");
 			output1.write("Standard Deviation: " + standardDeviation);
 			output1.write("\n");
