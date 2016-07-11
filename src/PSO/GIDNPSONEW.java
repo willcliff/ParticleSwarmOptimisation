@@ -241,12 +241,12 @@ public class GIDNPSONEW extends PSO {
 		
 		if(evoFactor > .6 && evoFactor <= .9){
 			stateFactor = "Exploration";
-			y = 4;
+			y = 2;
 		}
 		
 		else if(evoFactor > .3 && evoFactor <= .6){
 			stateFactor = "Exploitation";
-			y = 3;
+			y = 2;
 		}
 		
 		else if(evoFactor >= 0 && evoFactor <= .3){
@@ -255,7 +255,7 @@ public class GIDNPSONEW extends PSO {
 		}
 		else if(evoFactor > .9 && evoFactor <= 1){
 			stateFactor = "Jump Out";
-			y = 4;
+			y = 2;
 		}				
 	}
 

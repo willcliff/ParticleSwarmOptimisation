@@ -82,10 +82,10 @@ public class PSOMain {
 				fileName = dir + pso.psoType +"//" + pso.psoType + problem.functionName + ".dat";
 				
 				dir2 = "//fs2/14232817/Desktop/PSOResults/GraphResults/";
-				fileName2 = dir2 + pso.psoType + "/SwarmSize/" + "//" + pso.psoType + problem.functionName + ".dat";
+				fileName2 = dir2 + pso.psoType + "//" + pso.psoType + problem.functionName + "SwarmSize.dat";
 				
 				dir2 = "//fs2/14232817/Desktop/PSOResults/GraphResults/";
-				fileName2 = dir2 + pso.psoType + "//" + pso.psoType + problem.functionName + "evoFacts.dat";
+				fileName2 = dir2 + pso.psoType + "//" + pso.psoType + problem.functionName + "EvoFacts.dat";
 				
 				dir1 = "//fs2/14232817/Desktop/PSOResults/SummaryResults";
 				//dir1 = "C:/Users/William/Documents/NUIG Masters/Year2/PSOResults/SummaryResults";
@@ -137,7 +137,7 @@ public class PSOMain {
 			System.out.println("\n");
 			System.out.println("Time Elapsed: " + difference);
 			
-			/*BufferedWriter output;
+			BufferedWriter output;
 			output = new BufferedWriter(new FileWriter(fileName));
 			for (int i = 0; i < averageSwarmFitnesses.length; i++)
 	        {
@@ -160,7 +160,7 @@ public class PSOMain {
 				//averageSwarmSize[i] = averageSwarmSize[i] / numberOfRuns;           
 	            output.write(i+1 + "\t" + evoFacts[i] + "\n");         
 	        }
-			output.close();*/
+			output.close();
 			
 			BufferedWriter output1;
 			output1 = new BufferedWriter(new FileWriter(fileName1));
