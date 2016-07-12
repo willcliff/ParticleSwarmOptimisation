@@ -10,7 +10,7 @@ public class GIDNPSONEW2 extends PSO {
 	 int b = 2;//initial number of neighbours
      double y = 2;//rate of population increase
      
-     String parameters = "b = " + b + "\ty = " + y + "\th = (1 - evoFactor) * ((iteration + 1.0) / iterations) * swarmSize + b";
+     String parameters = "b = " + b + "\ty = Dynamic" + y + "\th = (1 - evoFactor) * ((iteration + 1.0) / iterations) * swarmSize + b";
      String stateFactor;
      
 	
@@ -21,7 +21,7 @@ public class GIDNPSONEW2 extends PSO {
 		//psoType = "GIDNPSONEW10xIts";
 		//psoType = "GIDNPSONEWTest";
 		//psoType = "Test";
-		psoType = "GIDNPSONEWv8withEvoFactsTestevo";
+		psoType = "GIDNPSONEWv8IncrY";
 		System.out.println("Commencing PSO GIDNNEW!\n");
 		for(Particle particle : swarm){
 			particle.neighbourhoodNumber = 0;			
@@ -86,7 +86,7 @@ public class GIDNPSONEW2 extends PSO {
 			if (neighbour.getPBestFitness() < nBestFitness) {
 				nBest = neighbour.getPBest().clone();
 				//neighbour.nBest = neighbour.getPosition().clone();
-				nBestFitness = neighbour.getFitness();				
+				nBestFitness = neighbour.getPBestFitness();				
 			}
 		}
 		return nBest;
@@ -246,11 +246,11 @@ public class GIDNPSONEW2 extends PSO {
 		
 		else if(evoFactor > .3 && evoFactor <= .6){
 			stateFactor = "Exploitation";
-			y = 2;
+			y = 3;
 		}
 		
 		else if(evoFactor >= 0 && evoFactor <= .3){
-			y = 2;
+			y = 4;
 			/*if (evoFactor == 0){
 				this.evoFactor = .1 * y;
 			}*/

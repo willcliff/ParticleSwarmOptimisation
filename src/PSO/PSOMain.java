@@ -57,8 +57,8 @@ public class PSOMain {
 				//GlobalPSO pso = new GlobalPSO(problem);
 				//VonNeumann pso = new VonNeumann(problem);
 				//GIDNPSO pso = new GIDNPSO(problem);
-				GIDNPSONEW pso = new GIDNPSONEW(problem);
-				//GIDNPSONEW2 pso = new GIDNPSONEW2(problem);
+				//GIDNPSONEW pso = new GIDNPSONEW(problem);
+				GIDNPSONEW2 pso = new GIDNPSONEW2(problem);
 				pso.execute();
 				//BasicTestFunc problem1 = new BasicTestFunc(j);
 				//TestFunc14 problem1 = new TestFunc14(function);
