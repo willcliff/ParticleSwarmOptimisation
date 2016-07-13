@@ -21,7 +21,7 @@ public class GIDNPSONEW2 extends PSO {
 		//psoType = "GIDNPSONEW10xIts";
 		//psoType = "GIDNPSONEWTest";
 		//psoType = "Test";
-		psoType = "GIDNPSONEWv8IncrY";
+		psoType = "GIDNPSONEWv8EvoTest";
 		System.out.println("Commencing PSO GIDNNEW!\n");
 		for(Particle particle : swarm){
 			particle.neighbourhoodNumber = 0;			

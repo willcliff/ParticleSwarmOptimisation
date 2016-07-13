@@ -26,16 +26,16 @@ public class PSOMain {
 		String psoType = "Default";
 		String parameters = "Default";
 		
-		for(int j = 1; j<=7; j++){
-			int numberOfRuns = 25;
+		for(int j = 1; j<=5; j++){
+			int numberOfRuns = 1;
 			int iterations;
 			double total = 0;
 			double finalAverage;
 			double standardDeviation = 0;
 			double[] avergaeBestFitness = new double[numberOfRuns];
-			double[] averageSwarmFitnesses = new double[10000];
-			double[] averageSwarmSize = new double[10000];
-			double[] evoFacts = new double[10000];
+			double[] averageSwarmFitnesses = new double[100];
+			double[] averageSwarmSize = new double[100];
+			double[] evoFacts = new double[100];
 			String dir;			
 			String dir1;
 			String dir2;
@@ -51,8 +51,8 @@ public class PSOMain {
 				// pso.execute();
 				// Problem problem = new Problem(function);
 
-				BasicTestFunc problem = new BasicTestFunc(j);
-				//TestFunc14 problem = new TestFunc14(j);
+				//BasicTestFunc problem = new BasicTestFunc(j);
+				TestFunc14 problem = new TestFunc14(j);
 				//LocalPSO pso = new LocalPSO(problem);
 				//GlobalPSO pso = new GlobalPSO(problem);
 				//VonNeumann pso = new VonNeumann(problem);
@@ -109,6 +109,8 @@ public class PSOMain {
 			
 			System.out.println("     Average BestValuesMAIN: "
 					+ Arrays.toString(avergaeBestFitness));
+			System.out.println("     EvoFactor: "
+					+ Arrays.toString(evoFacts));
 			for(int i = 0; i < averageSwarmSize.length; i++){
 				averageSwarmSize[i] = (int) averageSwarmSize[i] / numberOfRuns;
 				evoFacts[i] = evoFacts[i] / numberOfRuns;
@@ -139,7 +141,7 @@ public class PSOMain {
 			System.out.println("Time Elapsed: " + difference);
 			
 			BufferedWriter output;
-			output = new BufferedWriter(new FileWriter(fileName));
+			/*output = new BufferedWriter(new FileWriter(fileName));
 			for (int i = 0; i < averageSwarmFitnesses.length; i++)
 	        {
 				averageSwarmFitnesses[i] = averageSwarmFitnesses[i] / numberOfRuns;           
@@ -153,7 +155,7 @@ public class PSOMain {
 				//averageSwarmSize[i] = averageSwarmSize[i] / numberOfRuns;           
 	            output.write(i+1 + "\t" + averageSwarmSize[i] + "\n");         
 	        }
-			output.close();
+			output.close();*/
 			
 			output = new BufferedWriter(new FileWriter(fileName3));
 			for (int i = 0; i < evoFacts.length; i++)
