@@ -18,7 +18,7 @@ import java.text.*;
 public abstract class PSO {
 	Problem problem;
 	//int function = 1;
-	int iterations = 100;
+	int iterations = 10000;
 	int swarmSize = 50;
 	int iteration;
 	//int numberOfRuns = 1;

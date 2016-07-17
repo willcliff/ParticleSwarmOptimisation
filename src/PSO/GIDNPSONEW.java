@@ -11,13 +11,14 @@ public class GIDNPSONEW extends PSO {
      double y = 2;//rate of population increase
      //protected double evoFactor;
      String stateFactor;
-     String parameters = "b = " + b + "\ty = " + y + "\th = (1 - evoFactor) * Math.pow(((iteration + 1.0) / iterations), y) * swarmSize + b";
+     String parameters = "b = " + b + "\ty = " + y + "\th = (1 - evoFactor) * 2 * Math.pow(((iteration + 1.0) / iterations), y) * swarmSize + b";
      //double[] evoFacts = new double[10];
 	
 	public GIDNPSONEW(Problem problem){
 		super(problem);
 		//psoType = "GIDNPSO";
-		psoType = "GIDNPSONEWv8";
+		//psoType = "GIDNPSONEWv8";
+		psoType = "GIDNPSONEWv8x2";
 		//psoType = "GIDNPSONEWv9";
 		//psoType = "GIDNPSONEW2";
 		//psoType = "GIDNPSONEW10xIts";
@@ -159,7 +160,8 @@ public class GIDNPSONEW extends PSO {
 			//h = Math.pow(((iteration + 1.0) / iterations), y) * swarmSize + b;
 			//h = Math.pow((1/evoFactor), y) * swarmSize + b; //v4
 			////h = (1 - evoFactor) * swarmSize + b;
-			h = (1 - evoFactor) * Math.pow(((iteration + 1.0) / iterations), y) * swarmSize + b; //v8
+			//h = (1 - evoFactor) * Math.pow(((iteration + 1.0) / iterations), y) * swarmSize + b; //v8
+			h = ((1 - evoFactor) * 2 * Math.pow(((iteration + 1.0) / iterations), y) * swarmSize + b) / 2; //v8*2
 			//h = (evoFactor) * Math.pow(((iteration + 1.0) / iterations), y) * swarmSize + b; //v9
 			//h = (1 - evoFactor) * particle.neighbourhood.size() + b;
 			////h = Math.pow((1-evoFactor), y) * swarmSize + b;
