@@ -25,9 +25,11 @@ public class PSOMain {
 		long startTime = new Date( ).getTime();
 		String psoType = "Default";
 		String parameters = "Default";
-		
-		for(int j = 1; j<=30; j++){
-			int numberOfRuns = 25;
+		int probs = 30;
+		int numberOfRuns = 25;
+		List<double[]> allBests = new ArrayList<double[]>();
+		String[] functionNames = new String[probs];
+		for(int j = 1; j<=probs; j++){						
 			int iterations;
 			double total = 0;
 			double finalAverage;
@@ -51,8 +53,9 @@ public class PSOMain {
 				// pso.execute();
 				// Problem problem = new Problem(function);
 
-				//BasicTestFunc problem = new BasicTestFunc(j);
+				//BasicTestFunc problem = new BasicTestFunc(j);				
 				TestFunc14 problem = new TestFunc14(j);
+				functionNames[j-1] = problem.functionName;
 				//LocalPSO pso = new LocalPSO(problem);
 				//GlobalPSO pso = new GlobalPSO(problem);
 				//VonNeumann pso = new VonNeumann(problem);
@@ -165,6 +168,7 @@ public class PSOMain {
 	        }
 			output.close();
 			
+			
 			BufferedWriter output1;
 			output1 = new BufferedWriter(new FileWriter(fileName1));
 			output1.write("PSOType: " + psoType);
@@ -186,7 +190,33 @@ public class PSOMain {
 			output1.write("Time Elapsed: " + difference);
 			output1.close();
 			
+			allBests.add(avergaeBestFitness);
+			
 		}
+		String tTestdir = "//fs2/14232817/Desktop/PSOResults/GraphResults";
+		//String tTestfileName = tTestdir + "//" + psoType + ".xls";
+		String tTestfileName = tTestdir + "//Main" + psoType + ".xls";
+		
+		BufferedWriter output;
+		output = new BufferedWriter(new FileWriter(tTestfileName));
+		for (int i = 0; i < allBests.size(); i++)
+        {
+			output.write(functionNames[i] + "\t");
+			//averageSwarmSize[i] = averageSwarmSize[i] / numberOfRuns;                                
+        }
+		output.write("\n");
+		for (int i = 0; i < numberOfRuns; i++)
+        {
+			for (int j = 0; j < allBests.size(); j++)
+	        {
+				//averageSwarmSize[i] = averageSwarmSize[i] / numberOfRuns;           
+				output.write(allBests.get(j)[i] + "\t");        
+	        }
+			output.write("\n");
+			//averageSwarmSize[i] = averageSwarmSize[i] / numberOfRuns;           
+                     
+        }
+		output.close();
 		
 	}
 	
