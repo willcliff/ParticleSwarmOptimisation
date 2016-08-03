@@ -17,7 +17,11 @@ public class GIDNPSONEW extends PSO {
 	public GIDNPSONEW(Problem problem){
 		super(problem);
 		//psoType = "GIDNPSO";
-		psoType = "GIDNPSONEWv8";
+		//psoType = "GIDNPSONEWv8";
+		//psoType = "GIDNPSONEWv8IncrY";
+		//psoType = "GIDNPSONEWv8DecrY";
+		//psoType = "GIDNPSONEWv8Ac";
+		//psoType = "GIDNPSONEWv8Ac2";
 		//psoType = "GIDNPSONEWv8xls";
 		//psoType = "GIDNPSONEWv9";
 		//psoType = "GIDNPSONEW2";

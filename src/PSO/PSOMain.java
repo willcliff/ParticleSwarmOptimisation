@@ -59,8 +59,8 @@ public class PSOMain {
 				//LocalPSO pso = new LocalPSO(problem);
 				//GlobalPSO pso = new GlobalPSO(problem);
 				//VonNeumann pso = new VonNeumann(problem);
-				//GIDNPSO pso = new GIDNPSO(problem);
-				GIDNPSONEW pso = new GIDNPSONEW(problem);
+				GIDNPSO pso = new GIDNPSO(problem);
+				//GIDNPSONEW pso = new GIDNPSONEW(problem);
 				//GIDNPSONEW2 pso = new GIDNPSONEW2(problem);
 				pso.execute();
 				//BasicTestFunc problem1 = new BasicTestFunc(j);
@@ -80,7 +80,7 @@ public class PSOMain {
 				//LocalPSO pso1 = new LocalPSO(problem1);
 				//pso1.execute();
 				psoType = pso.psoType;
-				parameters = pso.parameters;
+				//parameters = pso.parameters;
 				dir = "//fs2/14232817/Desktop/PSOResults/GraphResults/";
 				//dir = "C:/Users/William/Documents/NUIG Masters/Year2/PSOResults/BasicFunctions";
 				fileName = dir + pso.psoType +"//" + pso.psoType + problem.functionName + ".dat";
@@ -143,7 +143,7 @@ public class PSOMain {
 			System.out.println("\n");
 			System.out.println("Time Elapsed: " + difference);
 			
-			BufferedWriter output;
+			/*BufferedWriter output;
 			output = new BufferedWriter(new FileWriter(fileName));
 			for (int i = 0; i < averageSwarmFitnesses.length; i++)
 	        {
@@ -190,12 +190,13 @@ public class PSOMain {
 			output1.write("Time Elapsed: " + difference);
 			output1.close();
 			
-			allBests.add(avergaeBestFitness);
+			allBests.add(avergaeBestFitness);*/
 			
 		}
+		
 		String tTestdir = "//fs2/14232817/Desktop/PSOResults/GraphResults";
 		//String tTestfileName = tTestdir + "//" + psoType + ".xls";
-		String tTestfileName = tTestdir + "//Main" + psoType + ".xls";
+		String tTestfileName = tTestdir + "//" + psoType + "Main" + ".xls"; //for CEC 2014 Functions
 		
 		BufferedWriter output;
 		output = new BufferedWriter(new FileWriter(tTestfileName));
