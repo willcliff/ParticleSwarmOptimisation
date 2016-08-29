@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 
-public class GIDNPSONEW extends PSO {
+public class AGIDNPSO extends PSO {
 	
 	 int b = 2;//initial number of neighbours
      double y = 2;//rate of population increase
@@ -14,22 +14,22 @@ public class GIDNPSONEW extends PSO {
      String parameters = "b = " + b + "\ty = " + y + "\th = (1 - evoFactor) * Math.pow(((iteration + 1.0) / iterations), y) * swarmSize + b";
      //double[] evoFacts = new double[10];
 	
-	public GIDNPSONEW(Problem problem){
-		super(problem);
+	public AGIDNPSO(Problem problem, int iterations){
+		super(problem, iterations);
 		//psoType = "GIDNPSO";
-		//psoType = "GIDNPSONEWv8";
-		//psoType = "GIDNPSONEWv8IncrY";
-		//psoType = "GIDNPSONEWv8DecrY";
-		//psoType = "GIDNPSONEWv8Ac";
-		//psoType = "GIDNPSONEWv8Ac2";
-		//psoType = "GIDNPSONEWv8xls";
+		//psoType = "AGIDNPSO";
+		//psoType = "AGIDNPSOIncrY";
+		//psoType = "AGIDNPSODecrY";
+		//psoType = "AGIDNPSOAc";
+		//psoType = "AGIDNPSOAc2test";
+		//psoType = "AGIDNPSOxls";
 		//psoType = "GIDNPSONEWv9";
 		//psoType = "GIDNPSONEW2";
 		//psoType = "GIDNPSONEW10xIts";
 		//psoType = "GIDNPSONEWTest";
-		//psoType = "Test";
+		psoType = "Test";
 		//psoType = "Test2";
-		System.out.println("Commencing PSO GIDNNEW!\n");
+		System.out.println("Commencing PSO AGIDN!\n");
 		for(Particle particle : swarm){
 			particle.neighbourhoodNumber = 0;			
 		}	
@@ -239,7 +239,7 @@ public class GIDNPSONEW extends PSO {
 		//evoFactor = ((maxDistance - gBestDistance)/(maxDistance - minDistance));
 		
 		//System.out.println("Evo Factor: " + evoFactor + "\n");
-		evoDecision(evoFactor);
+		//evoDecision(evoFactor);Include this for adaptive y and c versions
 		return evoFactor;
 	}
 	

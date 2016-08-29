@@ -6,7 +6,7 @@ import java.util.Collections;
 public class GlobalPSO extends PSO{
 	
 	public GlobalPSO(Problem problem,int iterations){
-		super(problem);
+		super(problem, iterations);
 		System.out.println(problem.getDimensions());
 		psoType = "GlobalSPSO";
 		System.out.println("Commencing Global PSO!\n");

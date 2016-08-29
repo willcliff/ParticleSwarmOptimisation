@@ -11,11 +11,13 @@ public class GIDNPSO extends PSO {
      int y = 2;//rate of population increase
      String stateFactor;
 	
-	public GIDNPSO(Problem problem){
-		super(problem);
+	public GIDNPSO(Problem problem, int iterations){
+		super(problem, iterations);
 		//psoType = "GIDNPSO";
 		psoType = "GIDNPSOIncreasingy";
 		//psoType = "GIDNPSODecreasingy";
+		//psoType = "GIDNPSOAc";
+		//psoType = "GIDNPSOAc2";
 		System.out.println("Commencing PSO GIDN!\n");
 		for(Particle particle : swarm){
 			particle.neighbourhoodNumber = 0;			
@@ -51,7 +53,7 @@ public class GIDNPSO extends PSO {
 
 			double previousH = particle.neighbourhoodNumber;
 			
-			double h = (((iteration + 1.0) / iterations) * ((iteration + 1.0) / iterations)) * swarmSize + b;
+			double h = Math.pow(((iteration + 1.0) / iterations), y) * swarmSize + b;
 			h = Math.floor(h);
 			particle.neighbourhoodNumber = h;
 			if(h > previousH){
@@ -140,21 +142,21 @@ public class GIDNPSO extends PSO {
 		
 		if(evoFactor > .6 && evoFactor <= .9){
 			stateFactor = "Exploration";
-			y = 2;
+			y = 1;
 		}
 		
 		else if(evoFactor > .3 && evoFactor <= .6){
 			stateFactor = "Exploitation";
-			y = 3;
+			y = 2;
 		}
 		
 		else if(evoFactor >= 0 && evoFactor <= .3){
 			stateFactor = "Convergence";
-			y = 4;
+			y = 3;
 		}
 		else if(evoFactor > .9 && evoFactor <= 1){
 			stateFactor = "Jump Out";
-			y = 2;
+			y = 1;
 		}				
 	}
 }

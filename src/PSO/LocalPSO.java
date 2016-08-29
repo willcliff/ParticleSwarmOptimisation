@@ -7,8 +7,8 @@ public class LocalPSO extends PSO{
 	//double gBestFitness;
 	
 	
-	public LocalPSO(Problem problem){
-		super(problem);
+	public LocalPSO(Problem problem, int iterations){
+		super(problem, iterations);
 		psoType = "RingSPSO";
 		System.out.println("Commencing Local PSO!\n");
 	}

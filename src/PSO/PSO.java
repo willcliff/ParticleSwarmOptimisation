@@ -18,13 +18,13 @@ import java.text.*;
 public abstract class PSO {
 	Problem problem;
 	//int function = 1;
-	int iterations = 10000;
+	int iterations;
 	int swarmSize = 50;
 	int iteration;
 	//int numberOfRuns = 1;
-	double[] averageFitnesses = new double[iterations];
-	double[] averageNeighbSize = new double[iterations];
-	double[] evoFacts = new double[iterations];
+	double[] averageFitnesses;
+	double[] averageNeighbSize;
+	double[] evoFacts;
 	double evoFactor;
 	// stores gBestFitness after each iteration
 	Date dateTime = new Date();
@@ -44,9 +44,13 @@ public abstract class PSO {
 	 // globally best particle
 	
 	
-	public PSO(Problem problem) {
-		this.problem = problem;	
+	public PSO(Problem problem, int iterations) {
+		this.problem = problem;
+		this.iterations = iterations;
 		dimensions = problem.getDimensions();
+		averageFitnesses = new double[iterations];
+		averageNeighbSize = new double[iterations];
+		evoFacts = new double[iterations];
 	}
 
 	public PSO(String psoType, int swarmSize, Problem problem, double standardDeviation) {
@@ -251,9 +255,9 @@ public abstract class PSO {
 			
 			//System.out.println("Both Fitnesses\t"+gBestFitness + " + " + gBestParticle.getFitness());
 			//calculateGBest();
-			System.out.println("     gBestParticle Fitness: " + (gBestParticle.getPBestFitness()));
-			System.out.println("     gBestFitness: " + gBestFitness + "\n");
-			System.out.println("     evoFacts: " + Arrays.toString(evoFacts));
+			//System.out.println("     gBestParticle Fitness: " + (gBestParticle.getPBestFitness()));
+			//System.out.println("     gBestFitness: " + gBestFitness + "\n");
+			//System.out.println("     evoFacts: " + Arrays.toString(evoFacts));
 			//System.out.println("\n");
 			
 			

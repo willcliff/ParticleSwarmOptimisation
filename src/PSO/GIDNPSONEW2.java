@@ -14,9 +14,9 @@ public class GIDNPSONEW2 extends PSO {
      String stateFactor;
      
 	
-	public GIDNPSONEW2(Problem problem){
-		super(problem);
-		//psoType = "GIDNPSONEW";
+	public GIDNPSONEW2(Problem problem, int iterations){//Test other variants
+		super(problem, iterations);
+		//psoType = "AGIDNPSO";
 		//psoType = "GIDNPSONEW2";
 		//psoType = "GIDNPSONEW10xIts";
 		//psoType = "GIDNPSONEWTest";

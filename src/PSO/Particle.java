@@ -124,7 +124,7 @@ public class Particle implements Comparable<Particle> {
 					//local best component
 					+ (c1 * rand1.nextDouble() * (pBest[i] - position[i]))
 					//global best component				
-					+ (c2 * rand2.nextDouble() * (nBest[i] - position[i]))));*///convergence=low evoFactor
+					+ (c2 * rand2.nextDouble() * (nBest[i] - position[i]))));*///convergence=low evoFactor Ac
 			
 			/*c1 = 1.55 + (1 * (1-evoFactor));
 			double remainder = 4.1 - c1;
@@ -133,7 +133,7 @@ public class Particle implements Comparable<Particle> {
 					//local best component
 					+ (c1 * rand1.nextDouble() * (pBest[i] - position[i]))
 					//global best component				
-					+ (c2 * rand2.nextDouble() * (nBest[i] - position[i]))));*///convergence=high evoFactor
+					+ (c2 * rand2.nextDouble() * (nBest[i] - position[i]))));*///convergence=high evoFactor Ac2
 			
 			/*newVelocity = (X*(velocity[i]
 					//local best component

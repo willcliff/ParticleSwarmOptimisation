@@ -2,8 +2,8 @@ package PSO;
 
 public class VonNeumann extends PSO{
 
-	public VonNeumann(Problem problem) {
-		super(problem);	
+	public VonNeumann(Problem problem, int iterations) {
+		super(problem, iterations);	
 		psoType = "vonNeumann";
 		System.out.println("Commencing vonNeumann PSO!\n");
 		// TODO Auto-generated constructor stub

@@ -12,11 +12,6 @@ public class PSOMain {
 		
 		
 			begin();
-			//PSO pso = new PSO();
-			//pso.execute();
-
-			//LocalPSO pso = new LocalPSO();
-			//pso.execute();
 
 		
 	}
@@ -25,19 +20,19 @@ public class PSOMain {
 		long startTime = new Date( ).getTime();
 		String psoType = "Default";
 		String parameters = "Default";
-		int probs = 30;
+		int probs = 7;//no of problems in suite 7 for basic functions, 30 for cec2014 functions or select individual functions and edit loop
 		int numberOfRuns = 25;
+		int iterations = 10000;
 		List<double[]> allBests = new ArrayList<double[]>();
 		String[] functionNames = new String[probs];
 		for(int j = 1; j<=probs; j++){						
-			int iterations;
 			double total = 0;
 			double finalAverage;
 			double standardDeviation = 0;
 			double[] avergaeBestFitness = new double[numberOfRuns];
-			double[] averageSwarmFitnesses = new double[10000];
-			double[] averageSwarmSize = new double[10000];
-			double[] evoFacts = new double[10000];
+			double[] averageSwarmFitnesses = new double[iterations];
+			double[] averageSwarmSize = new double[iterations];
+			double[] evoFacts = new double[iterations];
 			String dir;			
 			String dir1;
 			String dir2;
@@ -45,28 +40,18 @@ public class PSOMain {
 			String fileName1 = "DefaultFile";
 			String fileName2 = "DefaultFile";
 			String fileName3 = "DefaultFile";
-			for (int r = 0; r < numberOfRuns; r++) {
+			for (int r = 0; r < numberOfRuns; r++) {//select PSO and problem group
 
-				// GlobalPSO pso = new GlobalPSO();
-				// pso.execute();
-				// PSO pso = new PSO();
-				// pso.execute();
-				// Problem problem = new Problem(function);
-
-				//BasicTestFunc problem = new BasicTestFunc(j);				
-				TestFunc14 problem = new TestFunc14(j);
+				BasicTestFunc problem = new BasicTestFunc(j);				
+				//TestFunc14 problem = new TestFunc14(j);
 				functionNames[j-1] = problem.functionName;
-				//LocalPSO pso = new LocalPSO(problem);
-				//GlobalPSO pso = new GlobalPSO(problem);
-				//VonNeumann pso = new VonNeumann(problem);
-				GIDNPSO pso = new GIDNPSO(problem);
-				//GIDNPSONEW pso = new GIDNPSONEW(problem);
-				//GIDNPSONEW2 pso = new GIDNPSONEW2(problem);
+				//LocalPSO pso = new LocalPSO(problem, iterations);
+				//GlobalPSO pso = new GlobalPSO(problem, iterations);
+				//VonNeumann pso = new VonNeumann(problem, iterations);
+				//GIDNPSO pso = new GIDNPSO(problem, iterations);
+				AGIDNPSO pso = new AGIDNPSO(problem, iterations);
+				//GIDNPSONEW2 pso = new GIDNPSONEW2(problem, iterations);
 				pso.execute();
-				//BasicTestFunc problem1 = new BasicTestFunc(j);
-				//TestFunc14 problem1 = new TestFunc14(function);
-				//LocalPSO pso1 = new LocalPSO(problem1);
-				//pso1.execute();
 				
 				
 				for(int i = 0; i < pso.averageFitnesses.length; i++){
@@ -74,11 +59,7 @@ public class PSOMain {
 					averageSwarmSize[i] += pso.averageNeighbSize[i];
 					evoFacts[i] += pso.evoFacts[i];
 				}
-				//System.out.println("     Average swarmValuesMAIN RUN: " + r + " "	+ Arrays.toString(averageSwarmFitnesses) + "\n");				
-				//BasicTestFunc problem1 = new BasicTestFunc(j);
-				//TestFunc14 problem1 = new TestFunc14(function);
-				//LocalPSO pso1 = new LocalPSO(problem1);
-				//pso1.execute();
+				//System.out.println("     Average swarmValuesMAIN RUN: " + r + " "	+ Arrays.toString(averageSwarmFitnesses) + "\n");							
 				psoType = pso.psoType;
 				//parameters = pso.parameters;
 				dir = "//fs2/14232817/Desktop/PSOResults/GraphResults/";
@@ -143,7 +124,7 @@ public class PSOMain {
 			System.out.println("\n");
 			System.out.println("Time Elapsed: " + difference);
 			
-			/*BufferedWriter output;
+			/*BufferedWriter output;\\\\\output summary file, swarm fitnesses for convergence graphs, evofactors for graphs & swarm sizes for graphs
 			output = new BufferedWriter(new FileWriter(fileName));
 			for (int i = 0; i < averageSwarmFitnesses.length; i++)
 	        {
@@ -188,15 +169,15 @@ public class PSOMain {
 			output1.write("Final Average: " + finalAverage);
 			output1.write("\n");
 			output1.write("Time Elapsed: " + difference);
-			output1.close();
+			output1.close();*/
 			
-			allBests.add(avergaeBestFitness);*/
 			
+			allBests.add(avergaeBestFitness);			
 		}
 		
-		String tTestdir = "//fs2/14232817/Desktop/PSOResults/GraphResults";
-		//String tTestfileName = tTestdir + "//" + psoType + ".xls";
-		String tTestfileName = tTestdir + "//" + psoType + "Main" + ".xls"; //for CEC 2014 Functions
+		/*String tTestdir = "//fs2/14232817/Desktop/PSOResults/GraphResults";\\\\output wilcoxon info
+		String tTestfileName = tTestdir + "//" + psoType + ".xls";
+		//String tTestfileName = tTestdir + "//" + psoType + "Main" + ".xls"; //for CEC 2014 Functions
 		
 		BufferedWriter output;
 		output = new BufferedWriter(new FileWriter(tTestfileName));
@@ -209,32 +190,15 @@ public class PSOMain {
 		for (int i = 0; i < numberOfRuns; i++)
         {
 			for (int j = 0; j < allBests.size(); j++)
-	        {
-				//averageSwarmSize[i] = averageSwarmSize[i] / numberOfRuns;           
+	        {          
 				output.write(allBests.get(j)[i] + "\t");        
 	        }
-			output.write("\n");
-			//averageSwarmSize[i] = averageSwarmSize[i] / numberOfRuns;           
-                     
+			output.write("\n");		                              
         }
-		output.close();
+		output.close();*/
 		
 	}
 	
-	/*public void createAvSummary(double averageFitnesses[], String date, int noRuns) throws IOException{
-		String dir = "C:/Users/William/Documents/NUIG Masters/Year2/PSOResults";
-		String fileName = dir + "//" + psoType + problem.functionName + ".dat";
-		BufferedWriter output;
-		output = new BufferedWriter(new FileWriter(fileName));
-		for (int i = 0; i < averageFitnesses.length; i++)
-        {
-            averageFitnesses[i] = averageFitnesses[i] / noRuns;           
-            output.write(i+1 + "\t" + averageFitnesses[i] + "\n");         
-        }
-		output.close();
-		System.out.println("\nFile Created!\n");
-        //gnuPlot(fileName, date);	
-	}*/
 	public double getMean(double mean){
 		return mean;		
 	}
