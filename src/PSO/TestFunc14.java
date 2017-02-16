@@ -201,16 +201,12 @@ public class TestFunc14 extends Problem{
 				for (i=0; i<cf_num*dimensions*dimensions; i++)
 				{
 						M[i]=input.nextDouble();
-				}
-				
+				}				
 			}
 			input.close();
 			System.out.println("Matrix: " + Arrays.toString(M));
 			
-			//Load shift_data***************************************************
-		
-			
-			
+			//Load shift_data***************************************************		
 			if (functionNumber<23)
 			{
 				fpt=new File("input_data/shift_data_"+functionNumber+".txt");
@@ -316,11 +312,8 @@ public class TestFunc14 extends Problem{
 			System.out.println("Shufffle Data: " + Arrays.toString(SS));
 			n_flag=dimensions;
 			func_flag=functionNumber;
-			ini_flag=1;
-						
-						
-		}
-		
+			ini_flag=1;					
+		}		
 	}		
 
 	public double getFitness(double[] position) {
@@ -486,8 +479,6 @@ public class TestFunc14 extends Problem{
 			tmp2=z[i]-1.0;
 	        f += 100.0*tmp1*tmp1 +tmp2*tmp2;
 	    }
-	    
-	    
 	    return f;
 	}
 	
@@ -517,9 +508,7 @@ public class TestFunc14 extends Problem{
 	    int i,j,k_max;
 	    double sum,sum2=0, a, b;
 	    
-	    sr_func(x,z,nx,Os,Mr,0.5/100.0,s_flag,r_flag);/*shift and rotate*/ 
-		
-			   
+	    sr_func(x,z,nx,Os,Mr,0.5/100.0,s_flag,r_flag);/*shift and rotate*/ 				   
 	    a = 0.5;
 	    b = 3.0;
 	    k_max = 20;
@@ -569,8 +558,7 @@ public class TestFunc14 extends Problem{
 		for(i=0;i<nx;i++)
 		{
 			f += (z[i]*z[i] - 10.0*Math.cos(2.0*PI*z[i]) + 10.0);
-		}
-	    
+		}    
 	    return f;
 	}
 		
@@ -631,7 +619,6 @@ public class TestFunc14 extends Problem{
 	    f=f*tmp1-tmp1;
 	    
 	    return f;
-
 	}
 		
 	double happycat_func(double[] position, double f, int dimensions, double[] Os,double[] Mr,int s_flag,int r_flag) 	
@@ -677,7 +664,6 @@ public class TestFunc14 extends Problem{
 	    }
 	    f=Math.pow(Math.abs(Math.pow(r2,2.0)-Math.pow(sum_z,2.0)),2*alpha) + (0.5*r2 + sum_z)/nx + 0.5;
 	    return f;
-
 	}
 	
 	double grie_rosen_func (double[] x, double f, int nx, double[] Os,double[] Mr,int s_flag,int r_flag) /* Griewank-Rosenbrock  */
@@ -758,10 +744,7 @@ public class TestFunc14 extends Problem{
 		{
 			y[i]=z[S[i]-1];
 		}
-		
-		
-		
-		
+			
 		double[] ty,tO,tM;
 		
 		i=0;

@@ -21,7 +21,7 @@ public class Particle implements Comparable<Particle> {
 	double c2 = 2.05;
 	double w = c1 + c2;
 	double X = 2 / Math.abs(2 - w - Math.sqrt(w * w - 4 * w)); // double X = .72984;
-	//private static int particleCount = 1;
+	private static int particleCount = 1;
 	public int particleNo;
 	protected ArrayList<Particle> neighbourhood  = new ArrayList<Particle>();
 	protected ArrayList<Particle> notNeighbours ;
@@ -31,10 +31,9 @@ public class Particle implements Comparable<Particle> {
 	Problem problem;
 
 	public Particle(Problem problem) {
-		//particleCount  = 1;
-		//particleNo = particleCount;
-		//particleCount++;
-		//System.out.println("Particle Number: " + particleNo);
+		particleCount  = 1;
+		particleNo = particleCount;
+		particleCount++;
 		this.problem = problem;
 		dimensions = problem.getDimensions();
 		position = new double[dimensions];
@@ -50,17 +49,6 @@ public class Particle implements Comparable<Particle> {
 			// set random position and velocity
 			double randomPosition = (minPos + ((maxPos - minPos) * random.nextDouble()));
 			position[i] = randomPosition;
-			
-			// make sure particle is still in boundaries
-			/*if (position[i] < minPosition[i]) {
-				position[i] = minPosition[i];
-			}
-			if (position[i] > maxPosition[i]) {
-				position[i] = maxPosition[i];
-			}*/
-			
-			
-
 			// set random velocity
 			//velocity[i] = Math.random();
 			//double randomVelocity = minVelocity[i] + ((maxVelocity[i] - minVelocity[i]) * random.nextDouble());
@@ -69,30 +57,19 @@ public class Particle implements Comparable<Particle> {
             maxVelocity = hi;
     		minVelocity = lo;
             velocity[i] = (hi - lo) * random.nextDouble() + lo;			
-            //velocity[i] = randomVelocity;
 		}
-		//System.out.println("max velocity: " + maxVelocity);
-		//System.out.println("min velocity: " + minVelocity);
-		//System.out.println("particle position: " + Arrays.toString(position));		
-		//System.out.println("particle velocity: " + Arrays.toString(velocity));
-		//Initialise pBest
-		//set pBest = to initial position
 		fitness = problem.getFitness(position);
 		pBest = position.clone();
 		nBest = position.clone();
-		pBestFitness = fitness;
-		//System.out.println("particle" + particleNo + "fitness: " + fitness);		
+		pBestFitness = fitness;	
 	}
 
 	// finish updating velocity and update position
-	//public void update(double[] lBest) {
 	public void update(double[] nBest, double[] gBest, double evoFactor) {	
 		Random rand1 = new Random();
 		
 		Random rand2 = new Random();
 		
-		//System.out.println("Particle Number: " + particleNo + "Velocity Before: " + Arrays.toString(velocity));
-		//System.out.println("Particle Number: " + particleNo + "Position Before: " + Arrays.toString(getPosition()));
 		double r1 = rand1.nextDouble();
 		double r2 = rand2.nextDouble();
 		double r3 = rand2.nextDouble();
@@ -150,41 +127,34 @@ public class Particle implements Comparable<Particle> {
 			
 			else velocity[i] = newVelocity;			
 		}
-		//System.out.println("r1: " + r1 + " r2: " + r2);
-		//System.out.println("rand1.nextDouble() " + rand1.nextDouble() + " rand2.nextDouble() " + rand2.nextDouble());
-		
-		
 		boolean calcFitness = true;
 		
-		//position = location;
+		//make sure particle is still in boundaries
+		//below are different boundary conditions for repositioning particle if outside boundary
 		for (int i = 0; i < dimensions; i++) {
 			position[i] += velocity[i];
+			
+			//ignore particle until inside the boundary and allow particle to correct itself
+			if(position[i] < minPos || position[i] > maxPos){
+				calcFitness = false;
+			}
+			//give it a random position
 			/*if(position[i] < minPos || position[i] > maxPos){
 				//double randomPosition = (minPos + ((maxPos - minPos) * rand1.nextDouble()));
 				//position[i] = randomPosition;
 				position[i] -= velocity[i];
 			}*/
-			// make sure particle is still in boundaries
+			
+			//re-assign to boundary edge
 			/*if (position[i] < minPosition[i]) {
 				position[i] = minPosition[i];
 			}
 			if (position[i] > maxPosition[i]) {
 				position[i] = maxPosition[i];
-			}*/
-			/*if (Math.abs(position[i]) > maxPosition[i]){
-                calcFitness = false;
-			}*/
-			if(position[i] < minPos || position[i] > maxPos){
-				calcFitness = false;
-			}
-			
+			}*/					
 		}
-		//System.out.println("Particle Number: " + particleNo + "New Velocity: " + newVelocity);
-		//System.out.println("Particle Number: " + particleNo + "Velocity After: " + Arrays.toString(velocity));
-		//System.out.println("Particle Number: " + particleNo + "Position After: " + Arrays.toString(position));
 		if (calcFitness){
 			fitness = problem.getFitness(position);
-			//getFitness(position);
 		}
 	}
 
@@ -217,13 +187,11 @@ public class Particle implements Comparable<Particle> {
 	public int getDimensions() {
 		return dimensions;
 	}	
-	@Override
+
 	public int compareTo(Particle par) {
-		// TODO Auto-generated method stub
 		return this.getFitness() < par.getFitness() ? -1:1;
 	}
-	
-	
+
 	public double[] getPosition() {
 		return position;
 	}

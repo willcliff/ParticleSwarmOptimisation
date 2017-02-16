@@ -6,9 +6,7 @@ public class BasicTestFunc extends Problem{
 	public BasicTestFunc(){
 		super();		
 	}
-	//public BasicTestFunc(int functionNumber)throws Exception{
-		
-	//}	
+
 	public BasicTestFunc(int functionNumber) {
 		super();
 		System.out.println("BasicTestFunc");
@@ -67,7 +65,6 @@ public class BasicTestFunc extends Problem{
 		}
 				
 		System.out.println("Min Position: " + minPosition + "\tMax Position: " + maxPosition + "\tDimensions: " + dimensions);
-		// TODO Auto-generated constructor stub
 	}
 	public double getFitness(double[] position){
 		double fitness = 0;
@@ -104,10 +101,7 @@ public class BasicTestFunc extends Problem{
 					sum += (xi * xi);
 					prod *= Math.cos(xi / Math.sqrt(i));
 				}
-				//System.out.println("Sum: " + sum);
-				//System.out.println("Prod: " + prod);
 		        fitness = (sum / 4000.0) - prod + 1.0;	
-		       //System.out.println("Fitness: " + fitness);
 		        break;
 			case 5: //Rastrigin
 				sum = 0.0;
@@ -120,9 +114,7 @@ public class BasicTestFunc extends Problem{
 			case 6: //Schaffer2D	
 				double fact1 = (Math.sin(position[0] * position[0] - position[1] * position[1]) * Math.sin(position[0] * position[0] - position[1] * position[1]) - 0.5);
 				double fact2 = ((1 + 0.001 * (position[0] * position[0] + position[1] * position[1])) * (1 + 0.001 * (position[0] * position[0] + position[1] * position[1])));
-				fitness = 0.5 + fact1/fact2; // f(x) = 0.5 - ((sin(sqrt(x1^2+x2^2)))^2 - 0.5))/(1 + 0.001(x1^2+x2^2))^2
-
-	            //fitness = 0.5 - ((Math.sin(position[0] * position[0] + position[1] * position[1])) * (Math.sin(position[0] * position[0] + position[1] * position[1])) - 0.5) / ((1 + 0.001 * (position[0] * position[0] + position[1] * position[1])) * (1 + 0.001 * (position[0] * position[0] + position[1] * position[1])));
+				fitness = 0.5 + fact1/fact2; 
 				break;
 			case 7: //Griewank10D
 				sum = 0.0;
