@@ -80,13 +80,12 @@ public class GIDNPSO extends PSO {
 		for(Particle neighbour : particle.neighbourhood){			
 			if (neighbour.getPBestFitness() < nBestFitness) {
 				nBest = neighbour.getPBest().clone();
-				//neighbour.nBest = neighbour.getPosition().clone();
 				nBestFitness = neighbour.getPBestFitness();				
 			}
 		}
-		return nBest;
-		// TODO Auto-generated method stub		
+		return nBest;	
 	}
+	
 	@Override
 	public void averageDistance(){
 		ArrayList<Double> distances = new ArrayList<Double>();
@@ -99,42 +98,27 @@ public class GIDNPSO extends PSO {
 				Particle otherParticle = swarm.get(i-1);
 				if (i != currentParticle.particleNo){
 					for(int d = 0; d < dimensions; d++){
-						//distance += Math.pow((currentParticle.position[d] - otherParticle.position[d]), 2);
 						distance += (currentParticle.position[d] - otherParticle.position[d]) * (currentParticle.position[d] - otherParticle.position[d]);
 					}	
-				// look at else ending } and totalDistance formula
-				totalDistance += Math.sqrt(distance);
-				
+				totalDistance += Math.sqrt(distance);				
 				}
 				
 			}
-			//System.out.println("Distance: " + totalDistance);
 			averageDistance = totalDistance / (swarmSize -1);
 			currentParticle.setDistance(averageDistance);
-			distances.add(currentParticle.getDistance());
-			//System.out.println("Particle No." + currentParticle.particleNo + " Average Distance " + averageDistance);
-			//return averageDistance;
-			
+			distances.add(currentParticle.getDistance());			
 		}
-		evoFactor(distances);
-	
+		evoFactor(distances);	
 	}
 	
 	public double evoFactor(ArrayList<Double> distances){
-		//double evoFactor;
 		double minDistance = Collections.min(distances);
 		double maxDistance = Collections.max(distances);
-		//gBestParticle = Collections.min(swarm);
 		double gBestDistance = gBestParticle.getDistance();
-		//System.out.println("minDistance: " + minDistance);
-		//System.out.println("maxDistance: " + maxDistance);
-		//System.out.println("gBestParticle num " + gBestParticle.particleNo + "\tBestDistance: " + gBestDistance);
 		
 		evoFactor = ((gBestDistance - minDistance)/(maxDistance - minDistance));
-		//evoFactor = ((maxDistance - gBestDistance)/(maxDistance - minDistance));
+		evoDecision(evoFactor); //Include this for adaptive y and c versions
 		
-		//System.out.println("Evo Factor: " + evoFactor + "\n");
-		evoDecision(evoFactor);
 		return evoFactor;
 	}
 	

@@ -49,8 +49,7 @@ public abstract class PSO {
 		this.psoType = psoType;
 		// this.swarmSize = swarmSize;
 		this.problem = problem;
-		this.standardDeviation = standardDeviation;
-		
+		this.standardDeviation = standardDeviation;		
 	}
 	
 	public void execute() {

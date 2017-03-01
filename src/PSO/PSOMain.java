@@ -40,15 +40,18 @@ public class PSOMain {
 			String fileName3 = "DefaultFile";
 			for (int r = 0; r < numberOfRuns; r++) {
 				
-				//select PSO and problem group
+				//Select the suite of test functions			
 				BasicTestFunc problem = new BasicTestFunc(j);				
 				//TestFunc14 problem = new TestFunc14(j);
+				
 				functionNames[j-1] = problem.functionName;
+				
+				// Select the PSO type to run
+				AGIDNPSO pso = new AGIDNPSO(problem, iterations);			
 				//LocalPSO pso = new LocalPSO(problem, iterations);
 				//GlobalPSO pso = new GlobalPSO(problem, iterations);
 				//VonNeumann pso = new VonNeumann(problem, iterations);
 				//GIDNPSO pso = new GIDNPSO(problem, iterations);
-				AGIDNPSO pso = new AGIDNPSO(problem, iterations);
 				//GIDNPSONEW2 pso = new GIDNPSONEW2(problem, iterations);
 				pso.execute();
 				
@@ -89,11 +92,6 @@ public class PSOMain {
 				averageSwarmSize[i] = (int) averageSwarmSize[i] / numberOfRuns;
 				evoFacts[i] = evoFacts[i] / numberOfRuns;
 			}
-			//Print to averageSwarmSize + averageEvoFactor to console
-			/*System.out.println("     averageSwarmSize: "
-					+ Arrays.toString(averageSwarmSize));
-			System.out.println("     averageEvoFactor: "
-					+ Arrays.toString(evoFacts));*/
 			
 			finalAverage = total / numberOfRuns;
 			double temp = 0;
@@ -159,6 +157,7 @@ public class PSOMain {
 			output1.write("\n");
 			output1.write("Time Elapsed: " + difference);
 			output1.close();*/		
+			
 			allBests.add(avergaeBestFitness);			
 		}
 		
